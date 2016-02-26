@@ -8,30 +8,35 @@ public class character {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public int getX(){
 		return x;
 	}
-	
+
 	public int getY(){
 		return y;
 	}
-	
+
 	public void move(char dir){
 		switch (dir){
-		case('N'):	y--;
-		break;
+		case 'W':
+			y--;
+			break;
 
-		case('S'): y++;
-		break;
+		case 'S':
+			y++;
+			break;
 
-		case('O'): x--;
-		break;
+		case 'A':
+			x--;
+			break;
 
-		case('E'): x++;
-		break;
+		case 'D':
+			x++;
+			break;
 
-		default: break;
+		default:
+			break;
 		}
 	}
 

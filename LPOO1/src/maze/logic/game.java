@@ -1,4 +1,4 @@
-package maze.cli;
+package maze.logic;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,24 +7,32 @@ import java.nio.file.Paths;
 import maze.logic.*;
 
 public class game {
+	
+	public enum gameState{RUNNING,GAMEOVER,WIN};
+	
+	private int MAX_DRAGON_NUM = 10;
+	private int MAX_SWORD_NUM = 10;
 
 	private heroe h;
 	private dragon d[];
 	private sword s[];
 	private space[][] maze;
+	private int dragon_num = 0;
+	private int sword_num = 0;
+	private gameState state;
 
 	public static void main(String[] args) throws IOException {
 		//maze m = new maze();
 		//m.read("C:\\Users\\Jorge\\git\\lpoo1\\LPOO1\\Map");
 		//m.print();
-		game g = new game();
-		g.initReader("C:\\Users\\Jorge\\git\\lpoo1\\LPOO1\\Map");
-		g.print();
 
 	}
 
-	private void initReader(String path) throws IOException{
+	public game(String path) throws IOException{
 		maze = new space[10][10];
+		d = new dragon[MAX_DRAGON_NUM];
+		s = new sword[MAX_SWORD_NUM];
+		state = gameState.RUNNING;
 
 		int j = 0;
 		for (String line : Files.readAllLines(Paths.get(path))){
@@ -33,17 +41,19 @@ public class game {
 				char temp = line.charAt(i);
 				switch (temp){
 				case 'D':
-					//d[d.length] = new dragon(j,i);
+					d[dragon_num] = new dragon(i,j);
+					dragon_num++;
 					temp = ' ';
 					break;
 
 				case 'H':
-					h = new heroe(j,i);
+					h = new heroe(i,j);
 					temp = ' ';
 					break;
 
 				case 'E':
-					//s[s.length] = new sword(j,i);
+					s[sword_num] = new sword(i,j);
+					sword_num++;
 					temp = ' ';
 					break;
 
@@ -55,8 +65,15 @@ public class game {
 			j++;
 		}
 	}
+	
+	public void update(char heroe_dir){
+		if (heroe_dir == 'W' || heroe_dir == 'A' ||heroe_dir == 'S' || heroe_dir == 'D'){
+			h.move(heroe_dir);
 
-	private void print(){
+		}
+	}
+
+	public void print(){
 		char tmp[][] = new char[maze.length][maze[0].length];
 
 		for(int i = 0; i < maze.length; i++) {
@@ -64,16 +81,16 @@ public class game {
 				tmp[i][j] = maze[i][j].getAtri();
 			}
 		}
-		
-		tmp[h.getX()][h.getY()] = 'H';
-		
-		/*for(int i = 0; i < d.length; i++){
-			tmp[d[i].getX()][d[i].getY()] = 'D';
+
+		tmp[h.getY()][h.getX()] = 'H';
+
+		for(int i = 0; i < dragon_num; i++){
+			tmp[d[i].getY()][d[i].getX()] = 'D';
 		}
-		
-		for(int i = 0; i < s.length; i++){
-			tmp[s[i].getX()][s[i].getY()] = 'S';
-		}*/
+
+		for(int i = 0; i < sword_num; i++){
+			tmp[s[i].getY()][s[i].getX()] = 'E';
+		}
 
 		for(int i = 0; i < tmp.length; i++) {
 			for(int j = 0; j < tmp[i].length; j++) {
@@ -82,5 +99,9 @@ public class game {
 			System.out.println();
 		}
 		//System.out.
+	}
+	
+	public gameState getState(){
+		return state;
 	}
 }

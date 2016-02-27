@@ -3,6 +3,7 @@ package maze.logic;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import maze.logic.*;
 
@@ -10,15 +11,15 @@ public class game {
 	
 	public enum gameState{RUNNING,GAMEOVER,WIN};
 	
-	private int MAX_DRAGON_NUM = 10;
-	private int MAX_SWORD_NUM = 10;
+	//private int MAX_DRAGON_NUM = 10;
+	//private int MAX_SWORD_NUM = 10;
 
 	private heroe h;
 	private dragon d[];
 	private sword s[];
 	private space[][] maze;
-	private int dragon_num = 0;
-	private int sword_num = 0;
+	//private int dragon_num = 0;
+	//private int sword_num = 0;
 	private gameState state;
 
 	public static void main(String[] args) throws IOException {
@@ -30,8 +31,10 @@ public class game {
 
 	public game(String path) throws IOException{
 		maze = new space[10][10];
-		d = new dragon[MAX_DRAGON_NUM];
-		s = new sword[MAX_SWORD_NUM];
+		ArrayList<dragon> dragons = new ArrayList<dragon>();
+		ArrayList<sword> swords = new ArrayList<sword>();
+		//d = new dragon[MAX_DRAGON_NUM];
+		//s = new sword[MAX_SWORD_NUM];
 		state = gameState.RUNNING;
 
 		int j = 0;
@@ -41,8 +44,8 @@ public class game {
 				char temp = line.charAt(i);
 				switch (temp){
 				case 'D':
-					d[dragon_num] = new dragon(i,j);
-					dragon_num++;
+					//d[dragon_num] = new dragon(i,j);
+					dragons.add(new dragon(i,j));
 					temp = ' ';
 					break;
 
@@ -52,8 +55,7 @@ public class game {
 					break;
 
 				case 'E':
-					s[sword_num] = new sword(i,j);
-					sword_num++;
+					swords.add(new sword(i,j));
 					temp = ' ';
 					break;
 
@@ -64,6 +66,10 @@ public class game {
 			}
 			j++;
 		}
+		d = new dragon[dragons.size()];
+		d = dragons.toArray(d);
+		s = new sword[swords.size()];
+		s = swords.toArray(s);
 	}
 	
 	public void update(char heroe_dir){
@@ -84,11 +90,11 @@ public class game {
 
 		tmp[h.getY()][h.getX()] = 'H';
 
-		for(int i = 0; i < dragon_num; i++){
+		for(int i = 0; i < d.length; i++){
 			tmp[d[i].getY()][d[i].getX()] = 'D';
 		}
 
-		for(int i = 0; i < sword_num; i++){
+		for(int i = 0; i < s.length; i++){
 			tmp[s[i].getY()][s[i].getX()] = 'E';
 		}
 

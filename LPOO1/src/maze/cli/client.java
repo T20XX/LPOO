@@ -10,7 +10,7 @@ public class client {
 	public static void main(String[] args) throws IOException {
 		Scanner s = new Scanner(System.in);
 		char sel;
-		game g = new game("C:\\Users\\Telmo\\git\\lpoo1\\LPOO1\\Map");
+		game g = new game("Map");
 		
 		while (g.getState() == game.gameState.RUNNING){
 			sel = s.next().charAt(0);

@@ -157,4 +157,28 @@ public class game {
 	public gameState getState(){
 		return state;
 	}
+	
+	public void getSword(){
+		for(int i = 0; i < s.size(); i++){
+			if(h.getX() == s.get(i).getX() && h.getY() == s.get(i).getY()){
+				h.setAtri('A');
+				s.remove(i);
+			}
+		}
+	}
+	
+	public void DequalsS(){
+		for(int i = 0; i < d.size(); i++){
+			for(int j = 0; j < s.size();j++){
+				if(d.get(i).getX() == s.get(j).getX() && d.get(i).getY() == s.get(j).getY()){
+					maze[d.get(i).getX()][d.get(i).getY()].setAtri('F');
+				}
+				else {
+					maze[d.get(i).getX()][d.get(i).getY()].setAtri('D');	
+					maze[s.get(i).getX()][s.get(i).getY()].setAtri('S');
+				}
+			}
+		}
+	}
+ 
 }

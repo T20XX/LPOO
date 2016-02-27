@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import maze.logic.*;
 
 public class game {
-	
+
 	public enum gameState{RUNNING,GAMEOVER,WIN};
-	
+
 	//private int MAX_DRAGON_NUM = 10;
 	//private int MAX_SWORD_NUM = 10;
 
@@ -71,11 +71,34 @@ public class game {
 		s = new sword[swords.size()];
 		s = swords.toArray(s);
 	}
-	
-	public void update(char heroe_dir){
-		if (heroe_dir == 'W' || heroe_dir == 'A' ||heroe_dir == 'S' || heroe_dir == 'D'){
-			h.move(heroe_dir);
 
+	public void update(char kbd_input){
+		/*if (heroe_dir == 'W' || heroe_dir == 'A' ||heroe_dir == 'S' || heroe_dir == 'D'){
+			h.move(heroe_dir);
+		}*/
+		switch (kbd_input){
+		case 'W':
+			if (maze[h.getY()-1][h.getX()].getAllowMove())
+				h.move('N');
+			break;
+
+		case 'S':
+			if (maze[h.getY()+1][h.getX()].getAllowMove())
+				h.move('S');
+			break;
+
+		case 'A':
+			if (maze[h.getY()][h.getX()-1].getAllowMove())
+				h.move('O');
+			break;
+
+		case 'D':
+			if (maze[h.getY()][h.getX()+1].getAllowMove())
+				h.move('E');
+			break;
+
+		default:
+			return;
 		}
 	}
 
@@ -106,7 +129,7 @@ public class game {
 		}
 		//System.out.
 	}
-	
+
 	public gameState getState(){
 		return state;
 	}

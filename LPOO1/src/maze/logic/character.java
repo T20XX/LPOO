@@ -19,7 +19,7 @@ public class character {
 
 	public void move(char dir){
 		switch (dir){
-		case 'W':
+		case 'N':
 			y--;
 			break;
 
@@ -27,11 +27,11 @@ public class character {
 			y++;
 			break;
 
-		case 'A':
+		case 'O':
 			x--;
 			break;
 
-		case 'D':
+		case 'E':
 			x++;
 			break;
 

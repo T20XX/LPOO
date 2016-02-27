@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
 
 import maze.logic.*;
 
@@ -15,8 +16,8 @@ public class game {
 	//private int MAX_SWORD_NUM = 10;
 
 	private heroe h;
-	private dragon d[];
-	private sword s[];
+	private ArrayList<dragon> d;
+	private ArrayList<sword> s;
 	private space[][] maze;
 	//private int dragon_num = 0;
 	//private int sword_num = 0;
@@ -31,8 +32,8 @@ public class game {
 
 	public game(String path) throws IOException{
 		maze = new space[10][10];
-		ArrayList<dragon> dragons = new ArrayList<dragon>();
-		ArrayList<sword> swords = new ArrayList<sword>();
+		d = new ArrayList<dragon>();
+		s = new ArrayList<sword>();
 		//d = new dragon[MAX_DRAGON_NUM];
 		//s = new sword[MAX_SWORD_NUM];
 		state = gameState.RUNNING;
@@ -45,17 +46,17 @@ public class game {
 				switch (temp){
 				case 'D':
 					//d[dragon_num] = new dragon(i,j);
-					dragons.add(new dragon(i,j));
+					d.add(new dragon(i,j,'D'));
 					temp = ' ';
 					break;
 
 				case 'H':
-					h = new heroe(i,j);
+					h = new heroe(i,j, 'H');
 					temp = ' ';
 					break;
 
 				case 'E':
-					swords.add(new sword(i,j));
+					s.add(new sword(i,j));
 					temp = ' ';
 					break;
 
@@ -66,10 +67,6 @@ public class game {
 			}
 			j++;
 		}
-		d = new dragon[dragons.size()];
-		d = dragons.toArray(d);
-		s = new sword[swords.size()];
-		s = swords.toArray(s);
 	}
 
 	public void update(char kbd_input){
@@ -100,6 +97,20 @@ public class game {
 		default:
 			return;
 		}
+		Random rn = new Random();
+		for(int i = 0; i < d.size(); i++){
+			int n = rn.nextInt(4)+1;
+			char d_dir = ' ';
+			if(n == 1)
+				d_dir = 'N';
+			if(n == 2)
+				d_dir = 'S';
+			if(n == 3)
+				d_dir = 'O';
+			if(n == 4)
+				d_dir = 'E';
+			d.get(i).move(d_dir);
+		}
 	}
 
 	public void print(){
@@ -112,13 +123,16 @@ public class game {
 		}
 
 		tmp[h.getY()][h.getX()] = 'H';
+		//tempa.get(h.getY()).get(h.getX()).equals('H');
 
-		for(int i = 0; i < d.length; i++){
-			tmp[d[i].getY()][d[i].getX()] = 'D';
+		for(int i = 0; i < d.size(); i++){
+			tmp[d.get(i).getY()][d.get(i).getX()] = 'D';
+			//tempa.get(d.get(i).getY()).get(d.get(i).getX()).equals('D');
 		}
 
-		for(int i = 0; i < s.length; i++){
-			tmp[s[i].getY()][s[i].getX()] = 'E';
+		for(int i = 0; i < s.size(); i++){
+			tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
+			//tempa.get(s.get(i).getY()).get(s.get(i).getX()).equals('S');
 		}
 
 		for(int i = 0; i < tmp.length; i++) {

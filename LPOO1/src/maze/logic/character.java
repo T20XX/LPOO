@@ -3,10 +3,12 @@ package maze.logic;
 public class character {
 	private int x;
 	private int y;
+	private char atri;
 
-	public character(int x, int y){
+	public character(int x, int y, char atri){
 		this.x = x;
 		this.y = y;
+		this.atri = atri;
 	}
 
 	public int getX(){
@@ -15,6 +17,14 @@ public class character {
 
 	public int getY(){
 		return y;
+	}
+	
+	public char getAtri(){
+		return atri;
+	}
+	
+	public void setAtri(char a){
+		atri = a;
 	}
 
 	public void move(char dir){

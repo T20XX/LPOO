@@ -77,26 +77,35 @@ public class game {
 		case 'W':
 			if (maze[h.getY()-1][h.getX()].getAllowMove())
 				h.move('N');
+			else
+				return;
 			break;
 
 		case 'S':
 			if (maze[h.getY()+1][h.getX()].getAllowMove())
 				h.move('S');
+			else
+				return;
 			break;
 
 		case 'A':
 			if (maze[h.getY()][h.getX()-1].getAllowMove())
 				h.move('O');
+			else
+				return;
 			break;
 
 		case 'D':
 			if (maze[h.getY()][h.getX()+1].getAllowMove())
 				h.move('E');
+			else
+				return;
 			break;
 
 		default:
 			return;
 		}
+		
 		Random rn = new Random();
 		for(int i = 0; i < d.size(); i++){
 			int n = rn.nextInt(4)+1;
@@ -112,6 +121,7 @@ public class game {
 			d.get(i).move(d_dir);
 		}
 	}
+	
 
 	public void print(){
 		char tmp[][] = new char[maze.length][maze[0].length];

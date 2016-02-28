@@ -13,12 +13,12 @@ public class client {
 		game g = new game("Map");
 		
 		while (g.getState() == game.gameState.RUNNING){
+			g.print();
+			
 			sel = s.next().charAt(0);
 			sel = Character.toUpperCase(sel);
 			System.out.println(sel);
 			g.update(sel);
-
-			g.print();
 		}
 		s.close();
 

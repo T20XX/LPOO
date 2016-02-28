@@ -1,9 +1,9 @@
 package maze.logic;
 
 public class character {
-	private int x;
-	private int y;
-	private char atri;
+	protected int x;
+	protected int y;
+	protected char atri;
 
 	public character(int x, int y, char atri){
 		this.x = x;

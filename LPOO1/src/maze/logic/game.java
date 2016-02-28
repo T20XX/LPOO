@@ -105,23 +105,27 @@ public class game {
 		default:
 			return;
 		}
-		
-		Random rn = new Random();
+
+		if (h.getSword() == null){
+			for(int i = 0; i < s.size(); i++){
+				if (h.getX() == s.get(i).getX() && h.getY() == s.get(i).getY()){
+					h.setSword(s.get(i));
+				}
+			}
+		}
+		else{
+
+		}
+
+
 		for(int i = 0; i < d.size(); i++){
-			int n = rn.nextInt(4)+1;
-			char d_dir = ' ';
-			if(n == 1)
-				d_dir = 'N';
-			if(n == 2)
-				d_dir = 'S';
-			if(n == 3)
-				d_dir = 'O';
-			if(n == 4)
-				d_dir = 'E';
-			d.get(i).move(d_dir);
+			d.get(i).update(maze[d.get(i).getY()-1][d.get(i).getX()],
+					maze[d.get(i).getY()+1][d.get(i).getX()],
+					maze[d.get(i).getY()][d.get(i).getX()-1],
+					maze[d.get(i).getY()][d.get(i).getX()+1]);
 		}
 	}
-	
+
 
 	public void print(){
 		char tmp[][] = new char[maze.length][maze[0].length];
@@ -132,11 +136,8 @@ public class game {
 			}
 		}
 
-		tmp[h.getY()][h.getX()] = 'H';
-		//tempa.get(h.getY()).get(h.getX()).equals('H');
-
 		for(int i = 0; i < d.size(); i++){
-			tmp[d.get(i).getY()][d.get(i).getX()] = 'D';
+			tmp[d.get(i).getY()][d.get(i).getX()] = d.get(i).getAtri();
 			//tempa.get(d.get(i).getY()).get(d.get(i).getX()).equals('D');
 		}
 
@@ -144,7 +145,11 @@ public class game {
 			tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
 			//tempa.get(s.get(i).getY()).get(s.get(i).getX()).equals('S');
 		}
+		
 
+		tmp[h.getY()][h.getX()] = h.getAtri();
+		//tempa.get(h.getY()).get(h.getX()).equals('H');
+		
 		for(int i = 0; i < tmp.length; i++) {
 			for(int j = 0; j < tmp[i].length; j++) {
 				System.out.print(tmp[i][j]);
@@ -157,7 +162,7 @@ public class game {
 	public gameState getState(){
 		return state;
 	}
-	
+
 	public void getSword(){
 		for(int i = 0; i < s.size(); i++){
 			if(h.getX() == s.get(i).getX() && h.getY() == s.get(i).getY()){
@@ -166,7 +171,7 @@ public class game {
 			}
 		}
 	}
-	
+
 	public void DequalsS(){
 		for(int i = 0; i < d.size(); i++){
 			for(int j = 0; j < s.size();j++){
@@ -180,5 +185,5 @@ public class game {
 			}
 		}
 	}
- 
+
 }

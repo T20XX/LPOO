@@ -142,7 +142,10 @@ public class game {
 		}
 
 		for(int i = 0; i < s.size(); i++){
-			tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
+			if(tmp[s.get(i).getY()][s.get(i).getX()] == 'D')
+			tmp[s.get(i).getY()][s.get(i).getX()] = 'F';
+			else 
+				tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
 			//tempa.get(s.get(i).getY()).get(s.get(i).getX()).equals('S');
 		}
 		
@@ -161,15 +164,6 @@ public class game {
 
 	public gameState getState(){
 		return state;
-	}
-
-	public void getSword(){
-		for(int i = 0; i < s.size(); i++){
-			if(h.getX() == s.get(i).getX() && h.getY() == s.get(i).getY()){
-				h.setAtri('A');
-				s.remove(i);
-			}
-		}
 	}
 
 	public void DequalsS(){

@@ -129,11 +129,11 @@ public class game {
 						maze[d.get(i).getY()][d.get(i).getX()-1],
 						maze[d.get(i).getY()][d.get(i).getX()+1]);
 
-				if((d.get(i).getX()) == h.getX() && d.get(i).getY() == h.getY() ||
-						(d.get(i).getX())-1 == h.getX() && d.get(i).getY() == h.getY() ||
-						(d.get(i).getX())+1 == h.getX() && d.get(i).getY() == h.getY() ||
-						(d.get(i).getX()) == h.getX() && d.get(i).getY()-1 == h.getY() ||
-						(d.get(i).getX()) == h.getX() && d.get(i).getY()+1 == h.getY()){
+				if(((d.get(i).getX()) == h.getX() && d.get(i).getY() == h.getY()) ||
+						((d.get(i).getX())-1 == h.getX() && d.get(i).getY() == h.getY()) ||
+						((d.get(i).getX())+1 == h.getX() && d.get(i).getY() == h.getY()) ||
+						((d.get(i).getX()) == h.getX() && d.get(i).getY()-1 == h.getY()) ||
+						((d.get(i).getX()) == h.getX() && d.get(i).getY()+1 == h.getY())){
 					if(h.getSword() == null){
 						if(!d.get(i).getSleeping())
 							state = gameState.GAMEOVER;
@@ -191,8 +191,12 @@ public class game {
 	public gameState getState(){
 		return state;
 	}
+	
+	public hero getHero(){
+		return h;
+	}
 
-	public void DequalsS(){
+	/*public void DequalsS(){
 		for(int i = 0; i < d.size(); i++){
 			for(int j = 0; j < s.size();j++){
 				if(d.get(i).getX() == s.get(j).getX() && d.get(i).getY() == s.get(j).getY()){
@@ -204,6 +208,6 @@ public class game {
 				}
 			}
 		}
-	}
+	}*/
 
 }

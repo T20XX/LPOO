@@ -28,6 +28,7 @@ public class client {
 			sel = Character.toUpperCase(sel);
 			g.update(sel);
 		}
+		g.print();
 		if(g.getState() == gameState.GAMEOVER){
 			System.out.println("Hero was killed by a dragon!");
 		}

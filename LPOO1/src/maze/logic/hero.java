@@ -19,26 +19,7 @@ public class hero extends character{
 	}
 
 	public void move(char dir){
-		switch (dir){
-		case 'N':
-			y--;
-			break;
-
-		case 'S':
-			y++;
-			break;
-
-		case 'O':
-			x--;
-			break;
-
-		case 'E':
-			x++;
-			break;
-
-		default:
-			break;
-		}
+		super.move(dir);
 
 		//moves sword with heroe
 		if (s != null){

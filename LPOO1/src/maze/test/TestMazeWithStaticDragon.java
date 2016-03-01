@@ -32,4 +32,38 @@ public class TestMazeWithStaticDragon {
 		g.update('S');
 		assertEquals(gameState.GAMEOVER,g.getState());
 	}
+	@Test
+	public void testExitsafterKillDragon() throws IOException{
+		game g = new game("Test.txt",1);
+		g.update('A');
+		g.update('A');
+		g.update('S');
+		g.update('S');
+		g.update('D');
+		g.update('D');
+		g.update('W');
+		g.update('W');
+		g.update('D');
+		assertEquals(gameState.WIN, g.getState());
+	}
+	@Test
+	public void testExitsbeforeSword() throws IOException{
+		game g = new game("Test.txt",1);
+		g.update('D');
+		assertEquals(gameState.RUNNING, g.getState());
+	}
+	@Test
+	public void testExitsafterSwordBe4Dragon() throws IOException{
+		game g = new game("Test.txt",1);
+		g.update('A');
+		g.update('A');
+		g.update('S');
+		g.update('S');
+		g.update('W');
+		g.update('W');
+		g.update('D');
+		g.update('D');
+		g.update('D');
+		assertEquals(gameState.RUNNING, g.getState());
+	}
 }

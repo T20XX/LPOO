@@ -1,22 +1,18 @@
 package maze.logic;
 
+import java.awt.Point;
+
 public class character {
-	protected int x;
-	protected int y;
+	protected Point position;
 	protected char atri;
 
 	public character(int x, int y, char atri){
-		this.x = x;
-		this.y = y;
+		position = new Point(x,y);
 		this.atri = atri;
 	}
 
-	public int getX(){
-		return x;
-	}
-
-	public int getY(){
-		return y;
+	public Point getPosition(){
+		return position;
 	}
 	
 	public char getAtri(){
@@ -30,19 +26,19 @@ public class character {
 	public void move(char dir){
 		switch (dir){
 		case 'N':
-			y--;
+			position.y--;
 			break;
 
 		case 'S':
-			y++;
+			position.y++;
 			break;
 
 		case 'O':
-			x--;
+			position.x--;
 			break;
 
 		case 'E':
-			x++;
+			position.x++;
 			break;
 
 		default:

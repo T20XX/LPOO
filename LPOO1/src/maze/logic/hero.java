@@ -23,8 +23,8 @@ public class hero extends character{
 
 		//moves sword with heroe
 		if (s != null){
-			s.setX(x);
-			s.setY(y);
+			s.setX(position.x);
+			s.setY(position.y);
 		}
 	}
 }

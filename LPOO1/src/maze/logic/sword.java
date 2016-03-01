@@ -1,28 +1,24 @@
 package maze.logic;
 
+import java.awt.Point;
+
 public class sword {
-	private int x;
-	private int y;
+	private Point position;
 
 	public sword(int x, int y){
-		this.x = x;
-		this.y = y;
+		position = new Point(x,y);
 	}
-	
-	public int getX(){
-		return x;
-	}
-	
-	public int getY(){
-		return y;
+
+	public Point getPosition(){
+		return position;
 	}
 
 	public void setX(int x) {
-		this.x = x;
+		position.x = x;
 	}
 
 	public void setY(int y) {
-		this.y = y;
-		
+		position.y=y;
+
 	}
 }

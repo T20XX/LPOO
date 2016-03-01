@@ -78,28 +78,28 @@ public class game {
 		}*/
 		switch (kbd_input){
 		case 'W':
-			if (maze[h.getY()-1][h.getX()].getAllowMove())
+			if (maze[h.getPosition().y-1][h.getPosition().x].getAllowMove())
 				h.move('N');
 			else
 				return;
 			break;
 
 		case 'S':
-			if (maze[h.getY()+1][h.getX()].getAllowMove())
+			if (maze[h.getPosition().y+1][h.getPosition().x].getAllowMove())
 				h.move('S');
 			else
 				return;
 			break;
 
 		case 'A':
-			if (maze[h.getY()][h.getX()-1].getAllowMove())
+			if (maze[h.getPosition().y][h.getPosition().x-1].getAllowMove())
 				h.move('O');
 			else
 				return;
 			break;
 
 		case 'D':
-			if (maze[h.getY()][h.getX()+1].getAllowMove())
+			if (maze[h.getPosition().y][h.getPosition().x+1].getAllowMove())
 				h.move('E');
 			else
 				return;
@@ -111,7 +111,7 @@ public class game {
 
 		if (h.getSword() == null){
 			for(int i = 0; i < s.size(); i++){
-				if (h.getX() == s.get(i).getX() && h.getY() == s.get(i).getY()){
+				if (h.getPosition().x == s.get(i).getPosition().x && h.getPosition().y == s.get(i).getPosition().y){
 					h.setSword(s.get(i));
 				}
 			}
@@ -124,16 +124,16 @@ public class game {
 		{
 			for(int i = 0; i < d.size(); i++){
 				d.get(i).update(gamemode,
-						maze[d.get(i).getY()-1][d.get(i).getX()],
-						maze[d.get(i).getY()+1][d.get(i).getX()],
-						maze[d.get(i).getY()][d.get(i).getX()-1],
-						maze[d.get(i).getY()][d.get(i).getX()+1]);
+						maze[d.get(i).getPosition().y-1][d.get(i).getPosition().x],
+						maze[d.get(i).getPosition().y+1][d.get(i).getPosition().x],
+						maze[d.get(i).getPosition().y][d.get(i).getPosition().x-1],
+						maze[d.get(i).getPosition().y][d.get(i).getPosition().x+1]);
 
-				if(((d.get(i).getX()) == h.getX() && d.get(i).getY() == h.getY()) ||
-						((d.get(i).getX())-1 == h.getX() && d.get(i).getY() == h.getY()) ||
-						((d.get(i).getX())+1 == h.getX() && d.get(i).getY() == h.getY()) ||
-						((d.get(i).getX()) == h.getX() && d.get(i).getY()-1 == h.getY()) ||
-						((d.get(i).getX()) == h.getX() && d.get(i).getY()+1 == h.getY())){
+				if(((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+						((d.get(i).getPosition().x)-1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+						((d.get(i).getPosition().x)+1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+						((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y-1 == h.getPosition().y) ||
+						((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y+1 == h.getPosition().y)){
 					if(h.getSword() == null){
 						if(!d.get(i).getSleeping())
 							state = gameState.GAMEOVER;
@@ -146,7 +146,7 @@ public class game {
 			}
 		}
 		else{
-			if(maze[h.getY()][h.getX()].getType() == spaceType.EXIT){
+			if(maze[h.getPosition().y][h.getPosition().x].getType() == spaceType.EXIT){
 				state = gameState.WIN;
 			}
 		}
@@ -163,21 +163,21 @@ public class game {
 		}
 
 		for(int i = 0; i < d.size(); i++){
-			tmp[d.get(i).getY()][d.get(i).getX()] = d.get(i).getAtri();
-			//tempa.get(d.get(i).getY()).get(d.get(i).getX()).equals('D');
+			tmp[d.get(i).getPosition().y][d.get(i).getPosition().x] = d.get(i).getAtri();
+			//tempa.get(d.get(i).getPosition().y).get(d.get(i).getPosition().x).equals('D');
 		}
 
 		for(int i = 0; i < s.size(); i++){
-			if(tmp[s.get(i).getY()][s.get(i).getX()] == 'D')
-				tmp[s.get(i).getY()][s.get(i).getX()] = 'F';
+			if(tmp[s.get(i).getPosition().y][s.get(i).getPosition().x] == 'D')
+				tmp[s.get(i).getPosition().y][s.get(i).getPosition().x] = 'F';
 			else 
-				tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
-			//tempa.get(s.get(i).getY()).get(s.get(i).getX()).equals('S');
+				tmp[s.get(i).getPosition().y][s.get(i).getPosition().x] = 'E';
+			//tempa.get(s.get(i).getPosition().y).get(s.get(i).getPosition().x).equals('S');
 		}
 
 
-		tmp[h.getY()][h.getX()] = h.getAtri();
-		//tempa.get(h.getY()).get(h.getX()).equals('H');
+		tmp[h.getPosition().y][h.getPosition().x] = h.getAtri();
+		//tempa.get(h.getPosition().y).get(h.getPosition().x).equals('H');
 
 		for(int i = 0; i < tmp.length; i++) {
 			for(int j = 0; j < tmp[i].length; j++) {
@@ -199,12 +199,12 @@ public class game {
 	/*public void DequalsS(){
 		for(int i = 0; i < d.size(); i++){
 			for(int j = 0; j < s.size();j++){
-				if(d.get(i).getX() == s.get(j).getX() && d.get(i).getY() == s.get(j).getY()){
-					maze[d.get(i).getX()][d.get(i).getY()].setAtri('F');
+				if(d.get(i).getPosition().x == s.get(j).getPosition().x && d.get(i).getPosition().y == s.get(j).getPosition().y){
+					maze[d.get(i).getPosition().x][d.get(i).getPosition().y].setAtri('F');
 				}
 				else {
-					maze[d.get(i).getX()][d.get(i).getY()].setAtri('D');	
-					maze[s.get(i).getX()][s.get(i).getY()].setAtri('S');
+					maze[d.get(i).getPosition().x][d.get(i).getPosition().y].setAtri('D');	
+					maze[s.get(i).getPosition().x][s.get(i).getPosition().y].setAtri('S');
 				}
 			}
 		}

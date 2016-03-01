@@ -10,16 +10,18 @@ public class client {
 	public static void main(String[] args) throws IOException {
 		Scanner s = new Scanner(System.in);
 		char sel;
-		game g = new game("Map");
+		int gamemode;
+		System.out.println("Modo de Jogo: ");
+		gamemode = s.nextInt();
+		game g = new game("Map",gamemode);
 		
 		while (g.getState() == game.gameState.RUNNING){
 			g.print();
 			
 			sel = s.next().charAt(0);
-			sel = Character.toUpperCase(sel);
-			System.out.println(sel);
 			g.update(sel);
 		}
+		
 		s.close();
 
 	}

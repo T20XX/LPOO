@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import maze.logic.*;
+import maze.logic.space.spaceType;
 
 public class game {
 
@@ -16,6 +17,7 @@ public class game {
 	//private int MAX_SWORD_NUM = 10;
 
 	private heroe h;
+	private int gamemode;
 	private ArrayList<dragon> d;
 	private ArrayList<sword> s;
 	private space[][] maze;
@@ -30,14 +32,15 @@ public class game {
 
 	}
 
-	public game(String path) throws IOException{
+	public game(String path, int gamemode) throws IOException{
 		maze = new space[10][10];
 		d = new ArrayList<dragon>();
 		s = new ArrayList<sword>();
 		//d = new dragon[MAX_DRAGON_NUM];
 		//s = new sword[MAX_SWORD_NUM];
 		state = gameState.RUNNING;
-
+		this.gamemode = gamemode;
+		
 		int j = 0;
 		for (String line : Files.readAllLines(Paths.get(path))){
 
@@ -117,12 +120,35 @@ public class game {
 
 		}
 
+		if(d.size() != 0)
+		{
+			for(int i = 0; i < d.size(); i++){
+				d.get(i).update(gamemode,
+						maze[d.get(i).getY()-1][d.get(i).getX()],
+						maze[d.get(i).getY()+1][d.get(i).getX()],
+						maze[d.get(i).getY()][d.get(i).getX()-1],
+						maze[d.get(i).getY()][d.get(i).getX()+1]);
 
-		for(int i = 0; i < d.size(); i++){
-			d.get(i).update(maze[d.get(i).getY()-1][d.get(i).getX()],
-					maze[d.get(i).getY()+1][d.get(i).getX()],
-					maze[d.get(i).getY()][d.get(i).getX()-1],
-					maze[d.get(i).getY()][d.get(i).getX()+1]);
+				if((d.get(i).getX()) == h.getX() && d.get(i).getY() == h.getY() ||
+						(d.get(i).getX())-1 == h.getX() && d.get(i).getY() == h.getY() ||
+						(d.get(i).getX())+1 == h.getX() && d.get(i).getY() == h.getY() ||
+						(d.get(i).getX()) == h.getX() && d.get(i).getY()-1 == h.getY() ||
+						(d.get(i).getX()) == h.getX() && d.get(i).getY()+1 == h.getY()){
+					if(h.getSword() == null){
+						if(!d.get(i).getSleeping())
+							state = gameState.GAMEOVER;
+					}
+					else {
+						d.remove(i);
+						i--;
+					}
+				}
+			}
+		}
+		else{
+			if(maze[h.getY()][h.getX()].getType() == spaceType.EXIT){
+				state = gameState.WIN;
+			}
 		}
 	}
 
@@ -143,16 +169,16 @@ public class game {
 
 		for(int i = 0; i < s.size(); i++){
 			if(tmp[s.get(i).getY()][s.get(i).getX()] == 'D')
-			tmp[s.get(i).getY()][s.get(i).getX()] = 'F';
+				tmp[s.get(i).getY()][s.get(i).getX()] = 'F';
 			else 
 				tmp[s.get(i).getY()][s.get(i).getX()] = 'E';
 			//tempa.get(s.get(i).getY()).get(s.get(i).getX()).equals('S');
 		}
-		
+
 
 		tmp[h.getY()][h.getX()] = h.getAtri();
 		//tempa.get(h.getY()).get(h.getX()).equals('H');
-		
+
 		for(int i = 0; i < tmp.length; i++) {
 			for(int j = 0; j < tmp[i].length; j++) {
 				System.out.print(tmp[i][j]);

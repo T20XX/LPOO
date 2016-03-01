@@ -39,4 +39,7 @@ public class space {
 	public boolean getAllowMove(){
 		return allowMove;
 	}
+	public spaceType getType() {
+		return type;
+	}
 }

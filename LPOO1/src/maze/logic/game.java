@@ -195,6 +195,10 @@ public class game {
 	public hero getHero(){
 		return h;
 	}
+	
+	public ArrayList<dragon> getDragons(){
+		return d;
+	}
 
 	/*public void DequalsS(){
 		for(int i = 0; i < d.size(); i++){

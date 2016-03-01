@@ -16,7 +16,7 @@ public class game {
 	//private int MAX_DRAGON_NUM = 10;
 	//private int MAX_SWORD_NUM = 10;
 
-	private heroe h;
+	private hero h;
 	private int gamemode;
 	private ArrayList<dragon> d;
 	private ArrayList<sword> s;
@@ -54,7 +54,7 @@ public class game {
 					break;
 
 				case 'H':
-					h = new heroe(i,j, 'H');
+					h = new hero(i,j, 'H');
 					temp = ' ';
 					break;
 

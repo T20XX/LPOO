@@ -1,10 +1,10 @@
 package maze.logic;
 
-public class heroe extends character{
+public class hero extends character{
 
 	sword s;
 
-	public heroe(int x, int y, char atri){
+	public hero(int x, int y, char atri){
 		super(x,y,atri);
 		s = null;
 	}

@@ -54,9 +54,6 @@ public class TestMazeWithStaticDragon {
 	@Test
 	public void testDragonsMove() throws IOException {
 		game g = new game("Test.txt",1);
-		ArrayList<gameState> expected = new ArrayList<gameState>();
-		expected.add(gameState.RUNNING);
-		expected.add(gameState.GAMEOVER);
 
 	}
 

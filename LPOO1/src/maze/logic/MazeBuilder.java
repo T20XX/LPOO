@@ -74,7 +74,7 @@ public class MazeBuilder implements IMazeBuilder{
 			break;
 		}
 
-		visited[(int)guide.getY()][(int)guide.getX()] = 'X';
+		visited[(int)guide.y][(int)guide.x] = 'X';
 		history.push(guide);
 
 
@@ -84,58 +84,67 @@ public class MazeBuilder implements IMazeBuilder{
 			possDir = "";
 			try{
 				if (visited[guide.y-1][guide.x] == '.')
-					possDir+= 'N';
+					possDir += 'N';
 			}catch (IndexOutOfBoundsException e){}
 			try{
 				if (visited[guide.y+1][guide.x] == '.')
-					possDir+= 'S';
+					possDir += 'S';
 			}catch (IndexOutOfBoundsException e){}
 			try{
 				if (visited[guide.y][guide.x-1] == '.')
-					possDir+= 'O';
+					possDir += 'O';
 			}catch (IndexOutOfBoundsException e){}
 			try{
 				if (visited[guide.y][guide.x+1] == '.')
-					possDir+= 'E';
+					possDir += 'E';
 			}catch (IndexOutOfBoundsException e){}
 			
+			//System.out.println(possDir.length());
 			
-			if (!possDir.isEmpty()){
+			
+			if (possDir.length() != 0){
 				switch(possDir.charAt(r.nextInt(possDir.length()))){
 				case 'N':
 					guide.y--;
+					visited[guide.y][guide.x] = 'X';
+					maze[guide.y*2+2][guide.x*2+1] = ' ';
 					break;
 				case 'S':
 					guide.y++;
+					visited[guide.y][guide.x] = 'X';
+					maze[guide.y*2][guide.x*2+1] = ' ';
 					break;
 				case 'O':
 					guide.x--;
+					visited[guide.y][guide.x] = 'X';
+					maze[guide.y*2+1][guide.x*2+2] = ' ';
 					break;
 				case 'E':
 					guide.x++;
+					visited[guide.y][guide.x] = 'X';
+					maze[guide.y*2+1][guide.x*2] = ' ';
 					break;
 				default:
 					break;
 				}
-				visited[guide.y][guide.x] = 'X';
-				history.push(guide);
+				history.push(new Point(guide));
 			}else{
 				guide = history.pop();
 			}
-		}
-
-
-		for (int y = 0; y < size; y++){
-			for (int x = 0; x < size; x++){
-				System.out.print(maze[y][x]);
+			
+			for (int y = 0; y < size; y++){
+				for (int x = 0; x < size; x++){
+					System.out.print(maze[y][x]);
+				}
+				System.out.println();
 			}
-			System.out.println();
-		}
-		for (int y = 0; y < size/2; y++){
-			for (int x = 0; x < size/2; x++){
-				System.out.print(visited[y][x]);
+			for (int y = 0; y < size/2; y++){
+				for (int x = 0; x < size/2; x++){
+					System.out.print(visited[y][x]);
+				}
+				System.out.println();
 			}
-			System.out.println();
+			
 		}
 
 		return  maze;

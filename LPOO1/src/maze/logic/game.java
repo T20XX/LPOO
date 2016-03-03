@@ -28,7 +28,7 @@ public class game {
 		//m.read("C:\\Users\\Jorge\\git\\lpoo1\\LPOO1\\Map");
 		//m.print();
 		MazeBuilder mb = new MazeBuilder();
-		mb.buildMaze(18);
+		mb.buildMaze(9);
 
 	}
 

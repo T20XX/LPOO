@@ -24,10 +24,10 @@ public class client {
 		while (gamemode<1 || gamemode>3){
 			gamemode = s.nextInt();
 		}
-		game g = new game("Map",gamemode);
+		game g = new game("1.txt",gamemode);
 
 		while (g.getState() == game.gameState.RUNNING){
-			g.print();
+			//g.print();
 			draw(g);
 
 			sel = s.next().charAt(0);

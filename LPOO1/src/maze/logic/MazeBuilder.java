@@ -1,6 +1,9 @@
 package maze.logic;
 
 import java.awt.Point;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
@@ -98,10 +101,10 @@ public class MazeBuilder implements IMazeBuilder{
 				if (visited[guide.y][guide.x+1] == '.')
 					possDir += 'E';
 			}catch (IndexOutOfBoundsException e){}
-			
+
 			//System.out.println(possDir.length());
-			
-			
+
+
 			if (possDir.length() != 0){
 				switch(possDir.charAt(r.nextInt(possDir.length()))){
 				case 'N':
@@ -131,24 +134,44 @@ public class MazeBuilder implements IMazeBuilder{
 			}else{
 				guide = history.pop();
 			}
-			
-			for (int y = 0; y < size; y++){
-				for (int x = 0; x < size; x++){
-					System.out.print(maze[y][x]);
-				}
-				System.out.println();
+		}
+
+
+		// FOR DEBUGGING PURPOSES
+		for (int y = 0; y < size; y++){
+			for (int x = 0; x < size; x++){
+				System.out.print(maze[y][x]);
 			}
-			for (int y = 0; y < size/2; y++){
-				for (int x = 0; x < size/2; x++){
-					System.out.print(visited[y][x]);
-				}
-				System.out.println();
+			System.out.println();
+		}
+		for (int y = 0; y < size/2; y++){
+			for (int x = 0; x < size/2; x++){
+				System.out.print(visited[y][x]);
 			}
-			
+			System.out.println();
 		}
 
 		return  maze;
 	}
 
+	public void buildMazetoTXT(String path, int size){
+		char[][] maze;
+		maze = buildMaze(size);
+		try {
 
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+			for ( int y = 0; y < maze.length; y++)
+			{
+				for ( int x = 0; x < maze[y].length; x++)
+				{    
+					writer.write(maze[y][x]);
+				}
+				if(y != maze.length-1)
+					writer.write("\n");
+			}
+			writer.close();
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 }

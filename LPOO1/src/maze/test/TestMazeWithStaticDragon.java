@@ -10,20 +10,20 @@ public class TestMazeWithStaticDragon {
 	@Test
 	public void testMoveHeroToFreeCell() throws IOException {
 		game g = new game("Test.txt",1);
-		assertEquals(1, g.getHero().getY());
-		assertEquals(3, g.getHero().getX());
+		assertEquals(1, g.getHero().getPosition().y);
+		assertEquals(3, g.getHero().getPosition().x);
 		g.update('A');
-		assertEquals(1, g.getHero().getY());
-		assertEquals(2, g.getHero().getX());
+		assertEquals(1, g.getHero().getPosition().y);
+		assertEquals(2, g.getHero().getPosition().x);
 	}
 	@Test
 	public void testMoveHeroToWall() throws IOException {
 		game g = new game("Test.txt",1);
-		assertEquals(1, g.getHero().getY());
-		assertEquals(3, g.getHero().getX());
+		assertEquals(1, g.getHero().getPosition().y);
+		assertEquals(3, g.getHero().getPosition().x);
 		g.update('W');
-		assertEquals(1, g.getHero().getY());
-		assertEquals(3, g.getHero().getX());
+		assertEquals(1, g.getHero().getPosition().y);
+		assertEquals(3, g.getHero().getPosition().x);
 	}
 	
 	@Test
@@ -36,7 +36,7 @@ public class TestMazeWithStaticDragon {
 		g.update('S');
 		g.update('S');
 		assertNotNull(g.getHero().getSword());
-		//assertEquals(1, g.getHero().getY());
+		//assertEquals(1, g.getHero().getPosition().y);
 	}
 	
 	@Test

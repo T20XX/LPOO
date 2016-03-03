@@ -1,7 +1,6 @@
 package maze.logic;
 
 import java.util.Random;
-import java.util.ArrayList;
 
 public class dragon extends character{
 	private boolean sleeping;

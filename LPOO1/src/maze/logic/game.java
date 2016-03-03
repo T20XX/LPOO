@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Random;
 
-import maze.logic.*;
 import maze.logic.space.spaceType;
 
 public class game {
@@ -30,7 +28,7 @@ public class game {
 		//m.read("C:\\Users\\Jorge\\git\\lpoo1\\LPOO1\\Map");
 		//m.print();
 		MazeBuilder mb = new MazeBuilder();
-		mb.buildMaze(17);
+		mb.buildMaze(18);
 
 	}
 

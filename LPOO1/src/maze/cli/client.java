@@ -1,8 +1,6 @@
 package maze.cli;
 
-import java.awt.FlowLayout;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -25,10 +23,11 @@ public class client {
 			gamemode = s.nextInt();
 		}
 		game g = new game("1.txt",gamemode);
+		JFrame f = initializeFrame();
 
 		while (g.getState() == game.gameState.RUNNING){
-			//g.print();
-			draw(g);
+			g.print();
+			draw(f, g);
 
 			sel = s.next().charAt(0);
 			sel = Character.toUpperCase(sel);
@@ -43,53 +42,75 @@ public class client {
 		}
 		s.close();
 	}
-
-	private static void draw(game g){
+	
+	private static JFrame initializeFrame(){
 		JFrame f = new JFrame();
 		f.setSize(1000, 750);
 		f.setResizable(false);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setTitle("Hero Maze");
-		f.setLayout(new FlowLayout());
-
-		ImageIcon wall_img = new ImageIcon("C:\\Users\\Telmo\\Desktop\\wall.png");
-		ImageIcon sword_img = new ImageIcon("C:\\Users\\Telmo\\Desktop\\sword.png");
-		ArrayList<JLabel> temp = new ArrayList<JLabel>();
+		f.setLayout(null);
 		
+		return f;
+	}
+
+	private static void draw(JFrame f, game g){
+		
+
+		ImageIcon wall_img = new ImageIcon("img\\wall_img.png");
+		ImageIcon sword_img = new ImageIcon("img\\sword_img.png");
+		ImageIcon free_img = new ImageIcon("img\\free_img.png");
+		ImageIcon hero_img = new ImageIcon("img\\hero_img.png");
+		ImageIcon dragon_img = new ImageIcon("img\\dragon_img.png");
+		JLabel tmp;
+		
+		f.getContentPane().removeAll();
 		//char temp[][] = new char[g.getMaze().length][g.getMaze()[0].length];
 
-		for(int i = 0; i < g.getMaze().length; i++) {
-			for(int j = 0; j < g.getMaze()[i].length; j++) {
-				if (g.getMaze()[i][j].getType() == spaceType.WALL){
-					JLabel tmp = new JLabel(wall_img); 
-					tmp.setBounds(j*30, i*30, 30, 30);
-					System.out.print((j+1)*20);
-					System.out.println((i+1)*20);
-
-					temp.add(tmp);
-				}
-			}
+		for(int i = 0; i < g.getDragons().size(); i++){
+			tmp = new JLabel(dragon_img); 
+			tmp.setBounds(g.getDragons().get(i).getPosition().x*30, g.getDragons().get(i).getPosition().y*30, 30, 30);
+			f.add(tmp);
+			//temp.add(tmp);
 		}
-		
-		/*for(int i = 0; i < d.size(); i++){
-			tmp[d.get(i).getY()][d.get(i).getX()] = d.get(i).getAtri();
-			//tempa.get(d.get(i).getY()).get(d.get(i).getX()).equals('D');
-		}*/
 
 		for(int i = 0; i < g.getSwords().size(); i++){
-			JLabel tmp = new JLabel(sword_img); 
+			tmp = new JLabel(sword_img); 
 			tmp.setBounds(g.getSwords().get(i).getPosition().x*30, g.getSwords().get(i).getPosition().y*30, 30, 30);
 			//System.out.print((j+1)*20);
 			//System.out.println((i+1)*20);
-
-			temp.add(tmp);
+			f.add(tmp);
+			//temp.add(tmp);
 		}
-		//tmp[h.getY()][h.getX()] = h.getAtri();
+		tmp = new JLabel(hero_img); 
+		tmp.setBounds(g.getHero().getPosition().x*30, g.getHero().getPosition().y*30, 30, 30);
+		f.add(tmp);
+		//temp.add(tmp);
+		
+		for(int i = 0; i < g.getMaze().length; i++) {
+			for(int j = 0; j < g.getMaze()[i].length; j++) {
+				if (g.getMaze()[i][j].getType() == spaceType.WALL){
+					tmp = new JLabel(wall_img); 
+					tmp.setBounds(j*30, i*30, 30, 30);
+					//System.out.print((j+1)*20);
+					//System.out.println((i+1)*20);
+					f.add(tmp);
+					//temp.add(tmp);
+				} else if (g.getMaze()[i][j].getType() == spaceType.FREE){
+					tmp = new JLabel(free_img); 
+					tmp.setBounds(j*30, i*30, 30, 30);
+					f.add(tmp);
+					//temp.add(tmp);
+				}
+			}
+		}
 
-		for(int i= 0; i< temp.size();i++){
+		/*for(int i= 0; i< temp.size();i++){
 			f.add(temp.get(i));
-		}
+		}*/
+		f.getContentPane().revalidate();
+		f.getContentPane().repaint();
 	}
 
 }

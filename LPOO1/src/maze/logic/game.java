@@ -1,8 +1,8 @@
 package maze.logic;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import maze.logic.space.spaceType;
@@ -24,52 +24,72 @@ public class game {
 	private gameState state;
 
 	public static void main(String[] args) throws IOException {
-		//maze m = new maze();
-		//m.read("C:\\Users\\Jorge\\git\\lpoo1\\LPOO1\\Map");
-		//m.print();
 		MazeBuilder mb = new MazeBuilder();
-		mb.buildMazetoTXT("1.txt",9);
+		mb.buildMazetoTXT("1.txt",27);
 
 	}
 
 	public game(String path, int gamemode) throws IOException{
-		maze = new space[10][10];
+
 		d = new ArrayList<dragon>();
 		s = new ArrayList<sword>();
 		//d = new dragon[MAX_DRAGON_NUM];
 		//s = new sword[MAX_SWORD_NUM];
 		state = gameState.RUNNING;
 		this.gamemode = gamemode;
-		
-		int j = 0;
-		for (String line : Files.readAllLines(Paths.get(path))){
 
+		String  line = null;
+		int j = 1;
+		char temp;
+		try{
+			
+			// open input stream for reading purpose.
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			
+			//reads first line to get maze square size
+			line = br.readLine();
+			
+			//initializes maze array with size of first line
+			maze = new space[line.length()][line.length()];
+			
+			//fills first array with first line
 			for(int i = 0; i < line.length();i++){
-				char temp = line.charAt(i);
-				switch (temp){
-				case 'D':
-					//d[dragon_num] = new dragon(i,j);
-					d.add(new dragon(i,j,'D'));
-					temp = ' ';
-					break;
-
-				case 'H':
-					h = new hero(i,j, 'H');
-					temp = ' ';
-					break;
-
-				case 'E':
-					s.add(new sword(i,j));
-					temp = ' ';
-					break;
-
-				default:
-					break;
-				}
-				maze[j][i] = new space(temp);
+				temp = line.charAt(i);
+				maze[0][i] = new space(temp);
 			}
-			j++;
+			
+			while ((line = br.readLine()) != null) {
+				for(int i = 0; i < line.length();i++){
+					temp = line.charAt(i);
+					switch (temp){
+					case 'D':
+						d.add(new dragon(i,j,'D'));
+						temp = ' ';
+						break;
+
+					case 'H':
+						h = new hero(i,j, 'H');
+						temp = ' ';
+						break;
+
+					case 'E':
+						s.add(new sword(i,j));
+						temp = ' ';
+						break;
+
+					default:
+						break;
+					}
+					maze[j][i] = new space(temp);
+				}
+				j++;
+			}
+
+			br.close();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
+
 	}
 
 	public void update(char kbd_input){
@@ -185,25 +205,24 @@ public class game {
 			}
 			System.out.println();
 		}
-		//System.out.
 	}
 
 	public gameState getState(){
 		return state;
 	}
-	
+
 	public space[][] getMaze(){
 		return maze;
 	}
-	
+
 	public hero getHero(){
 		return h;
 	}
-	
+
 	public ArrayList<dragon> getDragons(){
 		return d;
 	}
-	
+
 	public ArrayList<sword> getSwords(){
 		return s;
 	}

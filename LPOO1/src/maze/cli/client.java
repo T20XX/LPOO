@@ -13,6 +13,7 @@ import maze.logic.space.spaceType;
 
 public class client {
 
+	
 	public static void main(String[] args) throws IOException {
 		Scanner s = new Scanner(System.in);
 		char sel;

@@ -9,6 +9,7 @@ import maze.logic.space.spaceType;
 
 public class game {
 
+	
 	public enum gameState{
 		HERO_UNARMED,
 		HERO_ARMED,

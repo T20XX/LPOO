@@ -46,7 +46,7 @@ public class client {
 	private static JFrame initializeFrame(){
 		JFrame f = new JFrame();
 		f.setSize(1000, 750);
-		f.setResizable(false);
+		f.setResizable(true);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setTitle("Hero Maze");

@@ -136,7 +136,38 @@ public class MazeBuilder implements IMazeBuilder{
 			}
 		}
 
-
+		//Randomly place of dragon
+		int rx, ry;
+		do{
+			rx = r.nextInt(size);
+			ry = r.nextInt(size);
+			if (maze[ry][rx] == ' '){
+				maze[ry][rx] = 'D';
+				break;
+			}
+			
+		}while(true);
+		
+		do{
+			rx = r.nextInt(size);
+			ry = r.nextInt(size);
+			if (maze[ry][rx] == ' '){
+				maze[ry][rx] = 'H';
+				break;
+			}
+			
+		}while(true);
+		
+		do{
+			rx = r.nextInt(size);
+			ry = r.nextInt(size);
+			if (maze[ry][rx] == ' '){
+				maze[ry][rx] = 'E';
+				break;
+			}
+			
+		}while(true);
+		
 		// FOR DEBUGGING PURPOSES
 		for (int y = 0; y < size; y++){
 			for (int x = 0; x < size; x++){

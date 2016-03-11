@@ -22,28 +22,20 @@ public class character {
 	public void setAtri(char a){
 		atri = a;
 	}
-
-	public void move(char dir){
-		switch (dir){
-		case 'N':
-			position.y--;
-			break;
-
-		case 'S':
-			position.y++;
-			break;
-
-		case 'O':
-			position.x--;
-			break;
-
-		case 'E':
-			position.x++;
-			break;
-
-		default:
-			break;
-		}
+	
+	public void moveUp(){
+		position.y--;
 	}
-
+	
+	public void moveDown(){
+		position.y++;
+	}
+	
+	public void moveLeft(){
+		position.x--;
+	}
+	
+	public void moveRight(){
+		position.x++;
+	}
 }

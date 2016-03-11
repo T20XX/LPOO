@@ -18,10 +18,27 @@ public class hero extends character{
 		atri = 'A';
 	}
 
-	public void move(char dir){
-		super.move(dir);
-
-		//moves sword with heroe
+	public void moveUp(){
+		super.moveUp();
+		moveSwordAlong();
+	}
+	
+	public void moveDown(){
+		super.moveDown();
+		moveSwordAlong();
+	}
+	
+	public void moveLeft(){
+		super.moveLeft();
+		moveSwordAlong();
+	}
+	
+	public void moveRight(){
+		super.moveRight();
+		moveSwordAlong();
+	}
+	
+	public void moveSwordAlong(){
 		if (s != null){
 			s.setX(position.x);
 			s.setY(position.y);

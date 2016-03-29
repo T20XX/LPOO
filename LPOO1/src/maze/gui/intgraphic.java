@@ -29,7 +29,12 @@ public class intgraphic extends JFrame {
 	private JPanel contentPane;
 	private JTextField mazeDimensionText;
 	private JTextField dragonsNumberText;
+	
 	private JLabel stateLbl;
+	private JButton upBtn;
+	private JButton leftBtn;
+	private JButton downBtn;
+	private JButton rightBtn;
 	private game g;
 	private boolean heroMoved = true;
 	private int gamemode = 0;
@@ -117,7 +122,7 @@ public class intgraphic extends JFrame {
 		textArea.setBounds(10, 89, 216, 172);
 		contentPane.add(textArea);
 
-		JButton upBtn = new JButton("UP");
+		upBtn = new JButton("UP");
 		upBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				heroMoved = g.moveHeroUp();
@@ -128,7 +133,7 @@ public class intgraphic extends JFrame {
 		upBtn.setBounds(312, 121, 89, 23);
 		contentPane.add(upBtn);
 
-		JButton leftBtn = new JButton("LEFT");
+		leftBtn = new JButton("LEFT");
 		leftBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				heroMoved = g.moveHeroLeft();
@@ -139,7 +144,7 @@ public class intgraphic extends JFrame {
 		leftBtn.setBounds(252, 155, 89, 23);
 		contentPane.add(leftBtn);
 
-		JButton downBtn = new JButton("DOWN");
+		downBtn = new JButton("DOWN");
 		downBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				heroMoved = g.moveHeroDown();
@@ -150,7 +155,7 @@ public class intgraphic extends JFrame {
 		downBtn.setBounds(312, 191, 89, 23);
 		contentPane.add(downBtn);
 
-		JButton rightBtn = new JButton("RIGHT");
+		rightBtn = new JButton("RIGHT");
 		rightBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				heroMoved = g.moveHeroRight();
@@ -174,7 +179,7 @@ public class intgraphic extends JFrame {
 				}
 				
 				//set gamemode
-				gamemode = dragonsTypeCB.getSelectedIndex();
+				gamemode = dragonsTypeCB.getSelectedIndex() + 1;
 				
 				//enable movement buttons
 				upBtn.setEnabled(true);
@@ -210,21 +215,26 @@ public class intgraphic extends JFrame {
 			g.updateGameState();
 		}
 		print(g);
+		updateState();
 	}
 	
 	public void updateState(){
 		if(g.getState() == gameState.GAMEOVER){
 			stateLbl.setText("Hero was killed by a dragon!");
-			//enable movement buttons
+			//disable movement buttons
 			upBtn.setEnabled(false);
 			leftBtn.setEnabled(false);
 			downBtn.setEnabled(false);
 			rightBtn.setEnabled(false);
-			contentPane.
+		}
+		else if(g.getState() == gameState.WIN){
+			stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
 		}
 		else{
-			System.out.println("Hero slained all dragons and found his way out of the maze!");
+			stateLbl.setText("Play!");
 		}
+		//contentPane.revalidate();
+		//contentPane.repaint();
 	}
 	
 	public static void print(game g){

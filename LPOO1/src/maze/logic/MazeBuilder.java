@@ -145,9 +145,9 @@ public class MazeBuilder implements IMazeBuilder{
 				maze[ry][rx] = 'D';
 				break;
 			}
-			
+
 		}while(true);
-		
+
 		do{
 			rx = r.nextInt(size);
 			ry = r.nextInt(size);
@@ -155,9 +155,9 @@ public class MazeBuilder implements IMazeBuilder{
 				maze[ry][rx] = 'H';
 				break;
 			}
-			
+
 		}while(true);
-		
+
 		do{
 			rx = r.nextInt(size);
 			ry = r.nextInt(size);
@@ -165,9 +165,9 @@ public class MazeBuilder implements IMazeBuilder{
 				maze[ry][rx] = 'E';
 				break;
 			}
-			
+
 		}while(true);
-		
+
 		// FOR DEBUGGING PURPOSES
 		for (int y = 0; y < size; y++){
 			for (int x = 0; x < size; x++){
@@ -203,6 +203,23 @@ public class MazeBuilder implements IMazeBuilder{
 			writer.close();
 		} catch(IOException ex) {
 			ex.printStackTrace();
+		}
+	}
+	public void buildMazeWithDragons(int size, int numDragons){
+		Random r = new Random();
+		char[][] maze;
+		maze = buildMaze(size);
+		int rx, ry;
+		for(int i = 0; i < numDragons-1; i++){
+			do{
+				rx = r.nextInt(size);
+				ry = r.nextInt(size);
+				if (maze[ry][rx] == ' '){
+					maze[ry][rx] = 'D';
+					break;
+				}
+
+			}while(true);
 		}
 	}
 }

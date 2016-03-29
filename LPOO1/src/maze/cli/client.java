@@ -43,6 +43,7 @@ public class client {
 				break;
 			case 'D':
 				heroMoved = g.moveHeroRight();
+				break;
 			default:
 				heroMoved = false;
 				break;

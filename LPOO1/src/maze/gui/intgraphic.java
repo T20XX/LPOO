@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -196,6 +198,44 @@ public class intgraphic extends JFrame {
 		stateLbl.setForeground(Color.GRAY);
 		stateLbl.setBounds(10, 272, 391, 14);
 		contentPane.add(stateLbl);
+		
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch(e.getKeyCode()){
+				
+				case KeyEvent.VK_UP: 
+					heroMoved = g.moveHeroUp();
+					update();
+					break;
+					
+				case KeyEvent.VK_LEFT: 
+					heroMoved = g.moveHeroLeft();
+					update();
+					break;
+
+				case KeyEvent.VK_DOWN: 
+					heroMoved = g.moveHeroDown();
+					update();
+					break;
+					
+				case KeyEvent.VK_RIGHT: 
+					heroMoved = g.moveHeroRight();
+					update();
+					break;
+				}
+				repaint();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}			
+		});
 
 	}
 	

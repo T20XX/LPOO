@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.junit.Test;
 import maze.logic.*;
 import maze.logic.game.gameState;
+
 public class TestMazeWithStaticDragon {
 	@Test
 	public void testMoveHeroToFreeCell() throws IOException {

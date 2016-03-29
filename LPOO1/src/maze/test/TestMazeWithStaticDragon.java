@@ -30,6 +30,7 @@ public class TestMazeWithStaticDragon {
 	public void testHeroPicksSword() throws IOException {
 		game g = new game("Test.txt");
 		assertEquals(gameState.HERO_UNARMED,g.getState());
+		assertNull(g.getHero().getSword());
 		g.moveHeroLeft();
 		g.updateGameState();
 		g.moveHeroLeft();
@@ -39,6 +40,7 @@ public class TestMazeWithStaticDragon {
 		g.moveHeroDown();
 		g.updateGameState();
 		assertEquals(gameState.HERO_ARMED,g.getState());
+		assertNotNull(g.getHero().getSword());
 	}
 	
 	@Test

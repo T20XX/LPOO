@@ -151,7 +151,11 @@ public class MazeBuilder implements IMazeBuilder{
 		do{
 			rx = r.nextInt(size);
 			ry = r.nextInt(size);
-			if (maze[ry][rx] == ' '){
+			if (maze[ry][rx] == ' ' && 
+					maze[ry+1][rx] != 'D' &&
+					maze[ry-1][rx] != 'D' &&
+					maze[ry][rx+1] != 'D' &&
+					maze[ry][rx-1] != 'D'){
 				maze[ry][rx] = 'H';
 				break;
 			}
@@ -196,7 +200,11 @@ public class MazeBuilder implements IMazeBuilder{
 			do{
 				rx = r.nextInt(size);
 				ry = r.nextInt(size);
-				if (maze[ry][rx] == ' '){
+				if (maze[ry][rx] == ' ' && 
+						maze[ry+1][rx] != 'H' &&
+						maze[ry-1][rx] != 'H' &&
+						maze[ry][rx+1] != 'H' &&
+						maze[ry][rx-1] != 'H'){
 					maze[ry][rx] = 'D';
 					break;
 				}

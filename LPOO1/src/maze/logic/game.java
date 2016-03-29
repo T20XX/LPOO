@@ -32,7 +32,7 @@ public class game {
 
 	public static void main(String[] args) throws IOException {
 		MazeBuilder mb = new MazeBuilder();
-		mb.buildMazetoTXT("1.txt",27);
+		mb.buildMazetoTXT("1.txt",27, 3);
 
 	}
 

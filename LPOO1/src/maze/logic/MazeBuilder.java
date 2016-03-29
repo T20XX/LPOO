@@ -169,25 +169,40 @@ public class MazeBuilder implements IMazeBuilder{
 		}while(true);
 
 		// FOR DEBUGGING PURPOSES
-		for (int y = 0; y < size; y++){
-			for (int x = 0; x < size; x++){
-				System.out.print(maze[y][x]);
-			}
-			System.out.println();
-		}
-		for (int y = 0; y < size/2; y++){
-			for (int x = 0; x < size/2; x++){
-				System.out.print(visited[y][x]);
-			}
-			System.out.println();
-		}
+//		for (int y = 0; y < size; y++){
+//			for (int x = 0; x < size; x++){
+//				System.out.print(maze[y][x]);
+//			}
+//			System.out.println();
+//		}
+//		for (int y = 0; y < size/2; y++){
+//			for (int x = 0; x < size/2; x++){
+//				System.out.print(visited[y][x]);
+//			}
+//			System.out.println();
+//		}
 
 		return  maze;
 	}
 
-	public void buildMazetoTXT(String path, int size){
+	public void buildMazetoTXT(String path, int size, int numDragons){
+		Random r = new Random();
 		char[][] maze;
+		int rx, ry;
+
 		maze = buildMaze(size);
+
+		for(int i = 0; i < numDragons-1; i++){
+			do{
+				rx = r.nextInt(size);
+				ry = r.nextInt(size);
+				if (maze[ry][rx] == ' '){
+					maze[ry][rx] = 'D';
+					break;
+				}
+			}while(true);
+		}
+
 		try {
 
 			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
@@ -203,23 +218,6 @@ public class MazeBuilder implements IMazeBuilder{
 			writer.close();
 		} catch(IOException ex) {
 			ex.printStackTrace();
-		}
-	}
-	public void buildMazeWithDragons(int size, int numDragons){
-		Random r = new Random();
-		char[][] maze;
-		maze = buildMaze(size);
-		int rx, ry;
-		for(int i = 0; i < numDragons-1; i++){
-			do{
-				rx = r.nextInt(size);
-				ry = r.nextInt(size);
-				if (maze[ry][rx] == ' '){
-					maze[ry][rx] = 'D';
-					break;
-				}
-
-			}while(true);
 		}
 	}
 }

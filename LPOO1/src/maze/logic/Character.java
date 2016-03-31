@@ -5,7 +5,7 @@ import java.awt.Point;
 /**
  * Represents characters like dragons and hero
  */
-public class character {
+public class Character {
 	protected Point position;
 	protected char atri;
 
@@ -15,7 +15,7 @@ public class character {
 	 * @param y Initial x axis position
 	 * @param atri Symbol that represents the character
 	 */
-	public character(int x, int y, char atri){
+	public Character(int x, int y, char atri){
 		position = new Point(x,y);
 		this.atri = atri;
 	}

@@ -5,7 +5,7 @@ import java.awt.Point;
 /**
  * Represents a sword that hero can pick
  */
-public class sword {
+public class Sword {
 	private Point position;
 
 	/**
@@ -13,7 +13,7 @@ public class sword {
 	 * @param x Initial x axis position
 	 * @param y Initial y axis position
 	 */
-	public sword(int x, int y){
+	public Sword(int x, int y){
 		position = new Point(x,y);
 	}
  

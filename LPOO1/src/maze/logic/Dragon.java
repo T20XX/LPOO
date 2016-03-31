@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Represents a dragon, character able to sleep
  */
-public class dragon extends character{
+public class Dragon extends Character{
 	private boolean sleeping;
 
 	/**
@@ -15,7 +15,7 @@ public class dragon extends character{
 	 * @param y Initial x axis position
 	 * @param atri Symbol that represents the dragon
 	 */
-	public dragon(int x, int y, char atri){
+	public Dragon(int x, int y, char atri){
 		super(x,y,atri);
 		sleeping = false;
 	}
@@ -35,7 +35,7 @@ public class dragon extends character{
 	 * @param left Space on the left side of the dragon
 	 * @param right Space on the right side of the dragon
 	 */
-	public void move(space up, space down, space left, space right){
+	public void move(Space up, Space down, Space left, Space right){
 		Random rn = new Random();
 		String possDir = "";
 		if (up.getAllowMove())
@@ -75,7 +75,7 @@ public class dragon extends character{
 	 * @param left Space on the left side of the dragon
 	 * @param right Space on the right side of the dragon
 	 */
-	public void moveOrSleep(space up, space down, space left, space right){
+	public void moveOrSleep(Space up, Space down, Space left, Space right){
 		Random rn = new Random();
 		String possDir = "";
 		if(sleeping){

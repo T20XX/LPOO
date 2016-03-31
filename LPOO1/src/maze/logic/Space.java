@@ -4,7 +4,7 @@ package maze.logic;
 /**
  * Represents a cell in the maze
  */
-public class space {
+public class Space {
 	/**
 	 * Type of space
 	 */
@@ -22,7 +22,7 @@ public class space {
 		 */
 		EXIT
 		};
-	spaceType type;
+	private spaceType type;
 	private char atri;
 	private boolean allowMove;
 
@@ -30,7 +30,7 @@ public class space {
 	 * Creates a new space(cell)
 	 * @param atri Char that represents the space
 	 */
-	public space(char atri){
+	public Space(char atri){
 		this.atri = atri;
 		switch(atri){
 		case ' ':

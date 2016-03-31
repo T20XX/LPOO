@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-import maze.logic.game;
-import maze.logic.game.gameState;
-import maze.logic.space.spaceType;
+import maze.logic.Game;
+import maze.logic.Game.gameState;
+import maze.logic.Space.spaceType;
 
 public class client {
 
@@ -26,8 +26,8 @@ public class client {
 			gamemode = s.nextInt();
 		}
 
-		game g = new game("Map");
-		while (g.getState() == game.gameState.HERO_UNARMED || g.getState() == game.gameState.HERO_ARMED){
+		Game g = new Game("Map");
+		while (g.getState() == Game.gameState.HERO_UNARMED || g.getState() == Game.gameState.HERO_ARMED){
 			print(g);
 			sel = s.next().charAt(0);
 			sel = Character.toUpperCase(sel);
@@ -86,7 +86,7 @@ public class client {
 		return f;
 	}
 
-	private static void draw(JFrame f, game g){
+	private static void draw(JFrame f, Game g){
 
 
 		ImageIcon wall_img = new ImageIcon("img\\wall_img.png");
@@ -175,7 +175,7 @@ public class client {
 		f.getContentPane().repaint();
 	}
 
-	public static void print(game g){
+	public static void print(Game g){
 		char tmp[][] = new char[g.getMaze().length][g.getMaze()[0].length];
 
 		for(int i = 0; i < g.getMaze().length; i++) {

@@ -20,8 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import maze.logic.MazeBuilder;
-import maze.logic.game;
-import maze.logic.game.gameState;
+import maze.logic.Game;
+import maze.logic.Game.gameState;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -37,7 +37,7 @@ public class intgraphic extends JFrame {
 	private JButton leftBtn;
 	private JButton downBtn;
 	private JButton rightBtn;
-	private game g;
+	private Game g;
 	private boolean heroMoved = true;
 	private int gamemode = 0;
 
@@ -175,7 +175,7 @@ public class intgraphic extends JFrame {
 				MazeBuilder mb = new MazeBuilder();
 				mb.buildMazetoTXT("tmp.txt",Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
 				try {
-					g = new game("tmp.txt");
+					g = new Game("tmp.txt");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -277,7 +277,7 @@ public class intgraphic extends JFrame {
 		//contentPane.repaint();
 	}
 	
-	public static void print(game g){
+	public static void print(Game g){
 		char tmp[][] = new char[g.getMaze().length][g.getMaze()[0].length];
 
 		for(int i = 0; i < g.getMaze().length; i++) {

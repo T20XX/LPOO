@@ -6,14 +6,14 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import maze.logic.game;
-import maze.logic.game.gameState;
+import maze.logic.Game;
+import maze.logic.Game.gameState;
 
 public class TestDragonsRandomBehavior {
 
 	@Test(timeout=1000)
 	public void testDragonsMove() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		boolean outcome1 = false, outcome2 = false;
 		while (! outcome1 || ! outcome2) {
 			g.moveDragons();
@@ -29,7 +29,7 @@ public class TestDragonsRandomBehavior {
 	
 	@Test(timeout=1000)
 	public void testDragonsMoveOrSleep() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		boolean outcome1 = false, outcome2 = false;
 		while (! outcome1 || ! outcome2) {
 			g.moveOrSleepDragons();

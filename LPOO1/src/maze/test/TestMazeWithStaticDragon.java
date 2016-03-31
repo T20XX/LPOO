@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 import maze.logic.*;
-import maze.logic.game.gameState;
+import maze.logic.Game.gameState;
 
 public class TestMazeWithStaticDragon {
 	@Test
 	public void testMoveHeroToFreeCell() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		assertEquals(1, g.getHero().getPosition().y);
 		assertEquals(3, g.getHero().getPosition().x);
 		g.moveHeroLeft();
@@ -19,7 +19,7 @@ public class TestMazeWithStaticDragon {
 	}
 	@Test
 	public void testMoveHeroToWall() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		assertEquals(1, g.getHero().getPosition().y);
 		assertEquals(3, g.getHero().getPosition().x);
 		g.moveHeroUp();
@@ -29,7 +29,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void testHeroPicksSword() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		assertEquals(gameState.HERO_UNARMED,g.getState());
 		assertNull(g.getHero().getSword());
 		g.moveHeroLeft();
@@ -46,7 +46,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void testHeroKillsDragon() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		assertEquals(1,g.getDragons().size());
 		g.moveHeroLeft();
 		g.updateGameState();
@@ -65,7 +65,7 @@ public class TestMazeWithStaticDragon {
 
 	@Test
 	public void testHeroDies() throws IOException {
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		assertEquals(gameState.HERO_UNARMED,g.getState());
 		g.moveHeroDown();
 		g.updateGameState();
@@ -73,7 +73,7 @@ public class TestMazeWithStaticDragon {
 	}
 	@Test
 	public void testExitsafterKillDragon() throws IOException{
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		g.moveHeroLeft();
 		g.updateGameState();
 		g.moveHeroLeft();
@@ -96,14 +96,14 @@ public class TestMazeWithStaticDragon {
 	}
 	@Test
 	public void testExitsbeforeSword() throws IOException{
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		g.moveHeroRight();
 		g.updateGameState();
 		assertEquals(gameState.HERO_UNARMED, g.getState());
 	}
 	@Test
 	public void testExitsafterSwordBe4Dragon() throws IOException{
-		game g = new game("Test.txt");
+		Game g = new Game("Test.txt");
 		g.moveHeroLeft();
 		g.updateGameState();
 		g.moveHeroLeft();

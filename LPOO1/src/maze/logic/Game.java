@@ -5,12 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import maze.logic.space.spaceType;
+import maze.logic.Space.spaceType;
 
 /**
  * Represents the game itself containing the maze, hero, dragons, sword, game states, etc.
  */
-public class game {
+public class Game {
 
 	/**
 	 *	Game states
@@ -38,11 +38,11 @@ public class game {
 	//private int MAX_DRAGON_NUM = 10;
 	//private int MAX_SWORD_NUM = 10;
 
-	private hero h;
+	private Hero h;
 	//private gameMode gamemode;
-	private ArrayList<dragon> d;
-	private ArrayList<sword> s;
-	private space[][] maze;
+	private ArrayList<Dragon> d;
+	private ArrayList<Sword> s;
+	private Space[][] maze;
 	//private int dragon_num = 0;
 	//private int sword_num = 0;
 	private gameState state;
@@ -57,9 +57,9 @@ public class game {
 	 * Creates a new game based on a maze
 	 * @param path Path to .txt file that contains the maze
 	 */
-	public game(String path) throws IOException{
-		d = new ArrayList<dragon>();
-		s = new ArrayList<sword>();
+	public Game(String path) throws IOException{
+		d = new ArrayList<Dragon>();
+		s = new ArrayList<Sword>();
 		//d = new dragon[MAX_DRAGON_NUM];
 		//s = new sword[MAX_SWORD_NUM];
 		state = gameState.HERO_UNARMED;
@@ -77,12 +77,12 @@ public class game {
 			line = br.readLine();
 
 			//initializes maze array with size of first line
-			maze = new space[line.length()][line.length()];
+			maze = new Space[line.length()][line.length()];
 
 			//fills first array with first line
 			for(int i = 0; i < line.length();i++){
 				temp = line.charAt(i);
-				maze[0][i] = new space(temp);
+				maze[0][i] = new Space(temp);
 			}
 
 			while ((line = br.readLine()) != null) {
@@ -90,24 +90,24 @@ public class game {
 					temp = line.charAt(i);
 					switch (temp){
 					case 'D':
-						d.add(new dragon(i,j,'D'));
+						d.add(new Dragon(i,j,'D'));
 						temp = ' ';
 						break;
 
 					case 'H':
-						h = new hero(i,j, 'H');
+						h = new Hero(i,j, 'H');
 						temp = ' ';
 						break;
 
 					case 'E':
-						s.add(new sword(i,j));
+						s.add(new Sword(i,j));
 						temp = ' ';
 						break;
 
 					default:
 						break;
 					}
-					maze[j][i] = new space(temp);
+					maze[j][i] = new Space(temp);
 				}
 				j++;
 			}
@@ -254,7 +254,7 @@ public class game {
 	 * Returns maze
 	 * @return 2D-Array that represents the maze
 	 */
-	public space[][] getMaze(){
+	public Space[][] getMaze(){
 		return maze;
 	}
 
@@ -262,7 +262,7 @@ public class game {
 	 * Returns hero
 	 * @return Hero
 	 */
-	public hero getHero(){
+	public Hero getHero(){
 		return h;
 	}
 
@@ -270,7 +270,7 @@ public class game {
 	 * Returns all dragons in game
 	 * @return All dragons in game
 	 */
-	public ArrayList<dragon> getDragons(){
+	public ArrayList<Dragon> getDragons(){
 		return d;
 	}
 
@@ -278,7 +278,7 @@ public class game {
 	 * Returns all swords in game, hero's and in the floor to be picked up
 	 * @return All swords in game
 	 */
-	public ArrayList<sword> getSwords(){
+	public ArrayList<Sword> getSwords(){
 		return s;
 	}
 

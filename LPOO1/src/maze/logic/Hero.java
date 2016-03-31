@@ -3,9 +3,9 @@ package maze.logic;
 /**
  * Represents a hero, character with a sword
  */
-public class hero extends character{
+public class Hero extends Character{
 
-	private sword s;
+	private Sword s;
 	
 	/**
 	 * Creates a new hero
@@ -13,7 +13,7 @@ public class hero extends character{
 	 * @param y Initial x axis position
 	 * @param atri Symbol that represents the hero
 	 */
-	public hero(int x, int y, char atri){
+	public Hero(int x, int y, char atri){
 		super(x,y,atri);
 		s = null;
 	}
@@ -22,7 +22,7 @@ public class hero extends character{
 	 * Returns the sword of the hero
 	 * @return Hero's sword or null in case he doesn't have one
 	 */
-	public sword getSword(){
+	public Sword getSword(){
 		return s;
 	}
 
@@ -30,7 +30,7 @@ public class hero extends character{
 	 * Sets hero's sword
 	 * @param s Sword to set
 	 */
-	public void setSword(sword s){
+	public void setSword(Sword s){
 		this.s = s;
 		atri = 'A';
 	}

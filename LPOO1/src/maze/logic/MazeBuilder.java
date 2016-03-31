@@ -8,7 +8,23 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * Maze randomly generator
+ */
 public class MazeBuilder implements IMazeBuilder{
+
+
+	/**
+	 * Generates a random maze using the Depth-first Search algorithm
+	 * Maze will be created in a 2D-Array of chars with the following configuration:
+	 * ' ' - Free space
+	 * 'X' - Wall
+	 * 'H' - Hero
+	 * 'D' - Dragon
+	 * 'S' - Sword
+	 * @param size Dimension of the squared maze (even numbers will turn into the next existing odd number since is required for the algorithm works properly)
+	 * @return 2D-Array of chars containing the symbols of the maze
+	 */
 	public char[][] buildMaze(int size) throws IllegalArgumentException{
 
 		/**
@@ -102,9 +118,6 @@ public class MazeBuilder implements IMazeBuilder{
 					possDir += 'E';
 			}catch (IndexOutOfBoundsException e){}
 
-			//System.out.println(possDir.length());
-
-
 			if (possDir.length() != 0){
 				switch(possDir.charAt(r.nextInt(possDir.length()))){
 				case 'N':
@@ -173,22 +186,28 @@ public class MazeBuilder implements IMazeBuilder{
 		}while(true);
 
 		// FOR DEBUGGING PURPOSES
-//		for (int y = 0; y < size; y++){
-//			for (int x = 0; x < size; x++){
-//				System.out.print(maze[y][x]);
-//			}
-//			System.out.println();
-//		}
-//		for (int y = 0; y < size/2; y++){
-//			for (int x = 0; x < size/2; x++){
-//				System.out.print(visited[y][x]);
-//			}
-//			System.out.println();
-//		}
+		//		for (int y = 0; y < size; y++){
+		//			for (int x = 0; x < size; x++){
+		//				System.out.print(maze[y][x]);
+		//			}
+		//			System.out.println();
+		//		}
+		//		for (int y = 0; y < size/2; y++){
+		//			for (int x = 0; x < size/2; x++){
+		//				System.out.print(visited[y][x]);
+		//			}
+		//			System.out.println();
+		//		}
 
 		return  maze;
 	}
 
+	/**
+	 * Generates a maze and writes into a .txt file
+	 * @param path Path of the .txt file to write
+	 * @param size Dimensions of the squared maze
+	 * @param numDragons Number of dragons to generate in the maze
+	 */
 	public void buildMazetoTXT(String path, int size, int numDragons){
 		Random r = new Random();
 		char[][] maze;

@@ -7,13 +7,30 @@ import java.util.ArrayList;
 
 import maze.logic.space.spaceType;
 
+/**
+ * Represents the game itself containing the maze, hero, dragons, sword, game states, etc.
+ */
 public class game {
 
-
+	/**
+	 *	Game states
+	 */
 	public enum gameState{
+		/**
+		 * Game is running and the hero doesn't have a sword
+		 */
 		HERO_UNARMED,
+		/**
+		 * Game is running and the hero have a sword
+		 */
 		HERO_ARMED,
+		/**
+		 * Game ended with the hero lose (Hero died from a dragon)
+		 */
 		GAMEOVER,
+		/**
+		 * Game ended with the hero win (Hero killed all the dragons and found the exit)
+		 */
 		WIN
 	};
 	//public enum gameMode{EASY,MEDIUM,HARD};
@@ -30,12 +47,16 @@ public class game {
 	//private int sword_num = 0;
 	private gameState state;
 
-	public static void main(String[] args) throws IOException {
-		MazeBuilder mb = new MazeBuilder();
-		mb.buildMazetoTXT("1.txt",27, 3);
+//	public static void main(String[] args) throws IOException {
+//		MazeBuilder mb = new MazeBuilder();
+//		mb.buildMazetoTXT("1.txt",27, 3);
+//
+//	}
 
-	}
-
+	/**
+	 * Creates a new game based on a maze
+	 * @param path Path to .txt file that contains the maze
+	 */
 	public game(String path) throws IOException{
 		d = new ArrayList<dragon>();
 		s = new ArrayList<sword>();
@@ -98,6 +119,10 @@ public class game {
 
 	}
 
+	/**
+	 * Moves hero up in the maze
+	 * @return True if the hero could move and false if the hero stayed in the same position
+	 */
 	public boolean moveHeroUp(){
 		if (maze[h.getPosition().y-1][h.getPosition().x].getAllowMove()){
 			h.moveUp();
@@ -108,6 +133,10 @@ public class game {
 
 	}
 
+	/**
+	 * Moves hero down in the maze
+	 * @return True if the hero could move and false if the hero stayed in the same position
+	 */
 	public boolean moveHeroDown(){
 		if (maze[h.getPosition().y+1][h.getPosition().x].getAllowMove()){
 			h.moveDown();		
@@ -117,6 +146,10 @@ public class game {
 		}
 	}
 
+	/**
+	 * Moves hero left in the maze
+	 * @return True if the hero could move and false if the hero stayed in the same position
+	 */
 	public boolean moveHeroLeft(){
 		if (maze[h.getPosition().y][h.getPosition().x-1].getAllowMove()){
 			h.moveLeft();
@@ -126,6 +159,10 @@ public class game {
 		}
 	}
 
+	/**
+	 * Moves hero right in the maze
+	 * @return True if the hero could move and false if the hero stayed in the same position
+	 */
 	public boolean moveHeroRight(){
 		if (maze[h.getPosition().y][h.getPosition().x+1].getAllowMove()){
 			h.moveRight();
@@ -135,6 +172,9 @@ public class game {
 		}
 	}
 
+	/**
+	 * Move all dragons randomly
+	 */
 	public void moveDragons(){
 		for(int i = 0; i < d.size(); i++){
 			d.get(i).move(
@@ -145,6 +185,9 @@ public class game {
 		}
 	}
 
+	/**
+	 * Updates all dragons state randomly from stay stopped, move, fall asleep or wake up
+	 */
 	public void moveOrSleepDragons(){
 		for(int i = 0; i < d.size(); i++){
 			d.get(i).moveOrSleep(
@@ -155,7 +198,10 @@ public class game {
 		}
 	}
 
-
+/**
+ * Updates game state
+ * Checks if the hero picks the sword and if he get killed or kills any dragon
+ */
 	public void updateGameState(){
 
 		//Arm the hero when it founds a sword
@@ -196,22 +242,42 @@ public class game {
 
 	}
 
+	/**
+	 * Returns game state
+	 * @return Game state
+	 */
 	public gameState getState(){
 		return state;
 	}
 
+	/**
+	 * Returns maze
+	 * @return 2D-Array that represents the maze
+	 */
 	public space[][] getMaze(){
 		return maze;
 	}
 
+	/**
+	 * Returns hero
+	 * @return Hero
+	 */
 	public hero getHero(){
 		return h;
 	}
 
+	/**
+	 * Returns all dragons in game
+	 * @return All dragons in game
+	 */
 	public ArrayList<dragon> getDragons(){
 		return d;
 	}
 
+	/**
+	 * Returns all swords in game, hero's and in the floor to be picked up
+	 * @return All swords in game
+	 */
 	public ArrayList<sword> getSwords(){
 		return s;
 	}

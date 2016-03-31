@@ -2,19 +2,39 @@ package maze.logic;
 
 import java.util.Random;
 
+/**
+ * Represents a dragon, character able to sleep
+ */
 public class dragon extends character{
 	private boolean sleeping;
 
+	/**
+	 * Creates a new dragon
+	 * A dragon is not sleeping when is instantiated
+	 * @param x Initial x axis position
+	 * @param y Initial x axis position
+	 * @param atri Symbol that represents the dragon
+	 */
 	public dragon(int x, int y, char atri){
 		super(x,y,atri);
 		sleeping = false;
 	}
 
+	/**
+	 * Returns on whether the dragon is sleeping or not
+	 * @return True if the dragon is sleeping and false if it's not
+	 */
 	public boolean getSleeping(){
 		return sleeping;
 	}
 
-	//Updates dragon state randomly from stay stopped, move, fall asleep or wake up
+	/**
+	 * Updates dragon position randomly
+	 * @param up Space upside dragon
+	 * @param down Space downside dragon
+	 * @param left Space on the left side of the dragon
+	 * @param right Space on the right side of the dragon
+	 */
 	public void move(space up, space down, space left, space right){
 		Random rn = new Random();
 		String possDir = "";
@@ -48,6 +68,13 @@ public class dragon extends character{
 		}
 	}
 
+	/**
+	 * Updates dragon state randomly from stay stopped, move, fall asleep or wake up
+	 * @param up Space upside dragon
+	 * @param down Space downside dragon
+	 * @param left Space on the left side of the dragon
+	 * @param right Space on the right side of the dragon
+	 */
 	public void moveOrSleep(space up, space down, space left, space right){
 		Random rn = new Random();
 		String possDir = "";

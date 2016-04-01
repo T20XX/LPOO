@@ -26,7 +26,7 @@ import maze.logic.Game.gameState;
 import java.awt.Color;
 import java.awt.Font;
 
-public class intgraphic extends JFrame {
+public class GenerateMazeGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField mazeDimensionText;
@@ -48,7 +48,7 @@ public class intgraphic extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					intgraphic frame = new intgraphic();
+					GenerateMazeGUI frame = new GenerateMazeGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +60,8 @@ public class intgraphic extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public intgraphic() {
+	public GenerateMazeGUI() {
+		setTitle("Generate Maze");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 330);
 		contentPane = new JPanel();
@@ -199,7 +200,7 @@ public class intgraphic extends JFrame {
 		stateLbl.setBounds(10, 272, 391, 14);
 		contentPane.add(stateLbl);
 		
-		addKeyListener(new KeyListener() {
+		/*addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				
@@ -235,7 +236,7 @@ public class intgraphic extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}			
-		});
+		});*/
 
 	}
 	

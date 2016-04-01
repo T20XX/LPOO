@@ -1,11 +1,12 @@
 package maze.gui;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 
-public class CreateMazeGUI {
+public class GameGUI{
 
 	private JFrame frame;
 
@@ -16,7 +17,7 @@ public class CreateMazeGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateMazeGUI window = new CreateMazeGUI();
+					GameGUI window = new GameGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -27,26 +28,24 @@ public class CreateMazeGUI {
 	/**
 	 * Create the application.
 	 */
-	public CreateMazeGUI() {
+	public GameGUI() throws IOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		frame = new JFrame();
-		frame.setTitle("Create Maze");
-		frame.setBounds(100, 100, 500, 550);
-		frame.setPreferredSize(new Dimension(507, 580));
+		frame.setTitle("Hero Maze");
+		frame.setBounds(100, 100, 450, 300);
+		frame.setPreferredSize(new Dimension(450, 300));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		CreateMazePanel panel = new CreateMazePanel();
+		GamePanel panel = new GamePanel();
 		frame.getContentPane().add(panel);
 
 		frame.pack();
-		
-		frame.setResizable(false);
 		
 		frame.setVisible(true);
 		

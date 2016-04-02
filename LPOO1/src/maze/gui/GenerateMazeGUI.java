@@ -176,15 +176,22 @@ public class GenerateMazeGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//generate maze
 				MazeBuilder mb = new MazeBuilder();
-				mb.buildMazetoTXT("tmp.txt",Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
+				mb.buildMazetoTXT("tmp",Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
 				try {
-					g = new Game("tmp.txt");
+					g = new Game("tmp");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				
 				//set gamemode
 				gamemode = dragonsTypeCB.getSelectedIndex() + 1;
+				
+				try {
+					GameGUI nextWindow = new GameGUI(new Game("tmp"), gamemode);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				//enable movement buttons
 				upBtn.setEnabled(true);
@@ -205,7 +212,7 @@ public class GenerateMazeGUI extends JFrame {
 		JButton createMazeBtn = new JButton("Create Maze");
 		createMazeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()));
+				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
 				mainWindow.setVisible(false);
 			}
 		});

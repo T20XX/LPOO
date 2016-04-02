@@ -9,13 +9,19 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import maze.logic.Game;
+import maze.logic.MazeBuilder;
 
 
 public class CreateMazePanel extends JPanel {
@@ -40,14 +46,15 @@ public class CreateMazePanel extends JPanel {
 	private BufferedImage exit;
 	private BufferedImage delete;
 	//private int x=0, y=0;//, width=100, height=100;
-	private JButton cancelBtn, confirmBtn;
+	private JButton confirmBtn;
 
 	private int mazeDim;
+	private int gamemode;
 	private double squareLength;
 	private char[][] maze;
 	private objectSelected selected = objectSelected.NONE;
 
-	public CreateMazePanel(int mazeDim) {
+	public CreateMazePanel(int mazeDim, int gamemode) {
 		this.setLayout(null);
 
 		try {
@@ -62,6 +69,7 @@ public class CreateMazePanel extends JPanel {
 		}	
 
 		this.mazeDim = mazeDim;
+		this.gamemode = gamemode;
 		maze = new char[mazeDim][mazeDim];
 		squareLength = WIDTH/mazeDim;
 
@@ -80,23 +88,37 @@ public class CreateMazePanel extends JPanel {
 			}
 		}
 
-		cancelBtn = new JButton("Cancel");
-		cancelBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GenerateMazeGUI.mainWindow.setVisible(true);
-				
-			}
-		});
-		cancelBtn.setBounds(300, 500, 100, 50);
-		this.add(cancelBtn);
-
-		confirmBtn = new JButton("Confirm");
+		confirmBtn = new JButton("Confirm and Play");
 		confirmBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				checkMazeValidity();
+				if(checkMazeValidity() == 0){
+					try {
+
+						BufferedWriter writer = new BufferedWriter(new FileWriter("tmp"));
+						for ( int y = 0; y < maze.length; y++)
+						{
+							for ( int x = 0; x < maze[y].length; x++)
+							{    
+								writer.write(maze[y][x]);
+							}
+							if(y != maze.length-1)
+								writer.write("\n");
+						}
+						writer.close();
+					} catch(IOException ex) {
+						ex.printStackTrace();
+					}
+					try {
+						GameGUI nextWindow = new GameGUI(new Game("tmp"), gamemode);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				}
 			}
 		});
-		confirmBtn.setBounds(400, 500, 100, 50);
+		confirmBtn.setBounds(300, 500, 200, 50);
 		this.add(confirmBtn);
 
 		addMouseListener(new MouseListener(){

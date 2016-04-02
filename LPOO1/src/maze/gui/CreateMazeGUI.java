@@ -10,6 +10,7 @@ public class CreateMazeGUI {
 
 	private JFrame frame;
 	private int mazeDim;
+	private int gamemode;
 
 	/**
 	 * Launch the application.
@@ -18,7 +19,7 @@ public class CreateMazeGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateMazeGUI window = new CreateMazeGUI(10);
+					CreateMazeGUI window = new CreateMazeGUI(10, 2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -29,8 +30,9 @@ public class CreateMazeGUI {
 	/**
 	 * Create the application.
 	 */
-	public CreateMazeGUI(int mazeDim) {
+	public CreateMazeGUI(int mazeDim, int gamemode) {
 		this.mazeDim = mazeDim;
+		this.gamemode = gamemode;
 		initialize();
 	}
 
@@ -52,7 +54,7 @@ public class CreateMazeGUI {
 			}
 		});
 
-		CreateMazePanel panel = new CreateMazePanel(mazeDim);
+		CreateMazePanel panel = new CreateMazePanel(mazeDim, gamemode);
 		frame.getContentPane().add(panel);
 
 		frame.pack();

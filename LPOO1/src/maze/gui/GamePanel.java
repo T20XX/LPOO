@@ -107,13 +107,17 @@ public class GamePanel extends JPanel {
 			for(int x = 0; x < game.getMaze()[y].length; x++) {
 				switch(game.getMaze()[y][x].getType()){
 				case EXIT:
-					g.drawImage(free, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, free.getWidth(), free.getHeight(), null);
+					if(game.getClosed()){
+						g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0 , 0 , exit.getWidth()/2, exit.getHeight(), null);
+						}
+						else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);
 					break;
 				case WALL:
 					g.drawImage(wall, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, wall.getWidth(), wall.getHeight(), null);
 					break;
 				case FREE:
 					g.drawImage(free, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, free.getWidth(), free.getHeight(), null);
+					break;
 				}
 			}
 		}
@@ -135,10 +139,6 @@ public class GamePanel extends JPanel {
 		y = game.getHero().getPosition().y;
 		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), (hero.getWidth()/2)*heroLeft , (hero.getHeight()/2)*heroArmed , (hero.getWidth()/2)*(heroLeft+1), (hero.getHeight()/2)*(heroArmed+1), null);
 		
-		if(game.getClosed()){
-		g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0 , 0 , exit.getWidth()/2, exit.getHeight(), null);
-		}
-		else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);
 		g.fillRect(0, 510, WIDTH/sizeD * game.getDragons().size(), 20);
 	}
 	public void update(){

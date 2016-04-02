@@ -1,6 +1,8 @@
 package maze.gui;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -10,11 +12,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 public class CreateMazePanel extends JPanel {
-	
+
 	private enum objectSelected{
 		NONE,
 		WALL,
@@ -34,7 +38,8 @@ public class CreateMazePanel extends JPanel {
 	private BufferedImage dragon;
 	private BufferedImage exit;
 	private BufferedImage delete;
-	private int x=0, y=0;//, width=100, height=100;
+	//private int x=0, y=0;//, width=100, height=100;
+	private JButton cancelBtn, confirmBtn;
 
 	private int mazeDim;
 	private double squareLength;
@@ -42,6 +47,8 @@ public class CreateMazePanel extends JPanel {
 	private objectSelected selected = objectSelected.NONE;
 
 	public CreateMazePanel(int mazeDim) {
+		this.setLayout(null);
+
 		try {
 			wall = ImageIO.read(new File("img/wall.png"));
 			hero = ImageIO.read(new File("img/hero.png"));
@@ -72,6 +79,24 @@ public class CreateMazePanel extends JPanel {
 			}
 		}
 
+		cancelBtn = new JButton("Cancel");
+		cancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		cancelBtn.setBounds(300, 500, 100, 50);
+		this.add(cancelBtn);
+
+		confirmBtn = new JButton("Confirm");
+		confirmBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkMazeValidity();
+			}
+		});
+		confirmBtn.setBounds(400, 500, 100, 50);
+		this.add(confirmBtn);
+
 		addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -98,29 +123,29 @@ public class CreateMazePanel extends JPanel {
 					case WALL:
 						tmp = 'X';
 						break;
-						
+
 					case HERO:
 						tmp = 'H';
 						break;
-						
+
 					case SWORD:
 						tmp = 'E';
 						break;
-						
+
 					case DRAGON:
 						tmp = 'D';
 						break;
-						
+
 					case EXIT:
 						tmp = 'S';
 						break;
-						
+
 					case DELETE:
 						tmp = ' ';
 						break;
 
-						default:
-							break;
+					default:
+						break;
 					}
 					maze[(int)(e.getY()/squareLength)][(int)(e.getX()/squareLength)] = tmp;
 				}
@@ -147,16 +172,16 @@ public class CreateMazePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-//		//Draws walls on borders
-//		for(int x = 0; x < 10; x++){
-//			g.drawImage(wall, x*50, 0, (x+1)*50, 50, 0, 0, wall.getWidth(), wall.getHeight(), null);
-//			g.drawImage(wall, x*50, 450, (x+1)*50, 500, 0, 0, wall.getWidth(), wall.getHeight(), null);
-//		}
-//
-//		for(int y = 1; y < 9; y++){
-//			g.drawImage(wall, 0, y*50, 50, (y+1)*50, 0, 0, wall.getWidth(), wall.getHeight(), null);
-//			g.drawImage(wall, 450, y*50, 500, (y+1)*50, 0, 0, wall.getWidth(), wall.getHeight(), null);
-//		}
+		//		//Draws walls on borders
+		//		for(int x = 0; x < 10; x++){
+		//			g.drawImage(wall, x*50, 0, (x+1)*50, 50, 0, 0, wall.getWidth(), wall.getHeight(), null);
+		//			g.drawImage(wall, x*50, 450, (x+1)*50, 500, 0, 0, wall.getWidth(), wall.getHeight(), null);
+		//		}
+		//
+		//		for(int y = 1; y < 9; y++){
+		//			g.drawImage(wall, 0, y*50, 50, (y+1)*50, 0, 0, wall.getWidth(), wall.getHeight(), null);
+		//			g.drawImage(wall, 450, y*50, 500, (y+1)*50, 0, 0, wall.getWidth(), wall.getHeight(), null);
+		//		}
 
 		//Draws grid
 		for(int x = 0; x < mazeDim; x++){
@@ -187,7 +212,7 @@ public class CreateMazePanel extends JPanel {
 				default:
 					break;
 				}
-				
+
 			}
 		}
 
@@ -201,6 +226,88 @@ public class CreateMazePanel extends JPanel {
 		//g.drawImage(confirm, 50, 501, 99, 550, 0, 0, confirm.getWidth(), confirm.getHeight(), null);
 		//g.drawImage(cancel, 50, 501, 99, 550, 0, 0, cancel.getWidth(), cancel.getHeight(), null);
 		//g.dra
+	}
+
+	public int checkMazeValidity(){
+		int heroCounter = 0, swordCounter = 0, dragonCounter = 0, exitCounter = 0;
+		for(int x = 0; x < mazeDim; x++){
+			for(int y = 0; y < mazeDim; y++){
+				switch (maze[y][x]){
+				case 'H':
+					heroCounter++;
+					break;
+
+				case 'E':
+					swordCounter++;
+					break;
+
+				case 'D':
+					dragonCounter++;
+					break;
+
+				case 'S':
+					exitCounter++;
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		if (heroCounter == 0){
+			JOptionPane.showMessageDialog(getParent(), "Place at least one hero.");
+			return 1;
+		} else if (heroCounter > 1){
+			JOptionPane.showMessageDialog(getParent(), "Place only one hero.");
+			return 2;
+		} else if (swordCounter == 0){
+			JOptionPane.showMessageDialog(getParent(), "Place at least one sword.");
+			return 3;
+		} else if (swordCounter > mazeDim*mazeDim/4){
+			JOptionPane.showMessageDialog(getParent(), "Number of swords must be lower than a quarter of the maze's area");
+			return 4;
+		} else if (dragonCounter == 0){
+			JOptionPane.showMessageDialog(getParent(), "Place at least one dragon.");
+			return 5;
+		} else if (dragonCounter > mazeDim*mazeDim/4){
+			JOptionPane.showMessageDialog(getParent(), "Number of dragons must be lower than a quarter of the maze's area");
+			return 6;
+		} else if (exitCounter == 0){
+			JOptionPane.showMessageDialog(getParent(), "Place at least one exit.");
+			return 7;
+		} else if (exitCounter > 1){
+			JOptionPane.showMessageDialog(getParent(), "Place only one exit.");
+			return 8;
+		}
+
+		for(int x = 0; x < mazeDim; x++){
+			for(int y = 0; y < mazeDim; y++){
+				switch (maze[y][x]){
+				case 'H':
+					if (maze[y-1][x] == 'D' ||
+					maze[y+1][x] == 'D' ||
+					maze[y][x-1] == 'D' ||
+					maze[y][x+1] == 'D'){
+						JOptionPane.showMessageDialog(getParent(), "Hero cannot be placed near a dragon.");
+						return 9;
+					}
+					break;
+
+				case 'S':
+					if (((x == 0 || x == mazeDim - 1) && y == x) || (x == 0 &&  y == mazeDim - 1) || (y == 0 &&  x == mazeDim - 1)){
+						JOptionPane.showMessageDialog(getParent(), "Exit cannot be placed in a corner.");
+						return 10;
+					}
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		return 0;
 	}
 
 }

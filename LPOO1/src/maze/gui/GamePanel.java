@@ -28,6 +28,7 @@ public class GamePanel extends JPanel {
 	private BufferedImage free;
 	private BufferedImage hero;
 	private BufferedImage dragon;
+	private BufferedImage exit;
 	private int x, y;
 	private double squareLength;
 	public final int WIDTH = 500;
@@ -36,6 +37,8 @@ public class GamePanel extends JPanel {
 	private int gamemode;
 	private JLabel stateLbl;
 	private int sizeD;
+	private int heroLeft = 0;
+	private int heroArmed = 0;
 
 	private Game game;
 
@@ -46,6 +49,7 @@ public class GamePanel extends JPanel {
 			hero = ImageIO.read(new File("img/hero.png"));
 			sword = ImageIO.read(new File("img/sword.png"));	
 			dragon = ImageIO.read(new File("img/dragon.png"));
+			exit = ImageIO.read(new File("img/exit.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,11 +70,13 @@ public class GamePanel extends JPanel {
 				case KeyEvent.VK_LEFT: 
 					heroMoved = game.moveHeroLeft();
 					update();
+					heroLeft = 1;
 					break;
 
 				case KeyEvent.VK_RIGHT: 
 					heroMoved = game.moveHeroRight();
 					update();
+					heroLeft = 0;
 					break;
 
 				case KeyEvent.VK_UP: 
@@ -118,14 +124,17 @@ public class GamePanel extends JPanel {
 		}
 
 		for(int i = 0; i < game.getSwords().size(); i++){
-			x = game.getSwords().get(i).getPosition().x;
-			y = game.getSwords().get(i).getPosition().y;
-			g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+			if(game.getHero().getSword() != game.getSwords().get(i)){
+				x = game.getSwords().get(i).getPosition().x;
+				y = game.getSwords().get(i).getPosition().y;
+				g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, sword.getWidth(), sword.getHeight(), null);
+			}
 		}
+		
 		x = game.getHero().getPosition().x;
 		y = game.getHero().getPosition().y;
-		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
-		
+		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), (hero.getWidth()/2)*heroLeft , (hero.getHeight()/2)*heroArmed , (hero.getWidth()/2)*(heroLeft+1), (hero.getHeight()/2)*(heroArmed+1), null);
+
 		g.fillRect(0, 510, WIDTH/sizeD * game.getDragons().size(), 20);
 	}
 	public void update(){
@@ -157,15 +166,17 @@ public class GamePanel extends JPanel {
 		}
 		else{
 			stateLbl.setText("Play!");
+			if(game.getState() == gameState.HERO_ARMED && heroArmed == 0)
+				heroArmed = 1;
 		}
 		this.revalidate();
 		this.repaint();
 	}
 	{
-	stateLbl = new JLabel("Play");
-	stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
-	stateLbl.setForeground(Color.GRAY);
-	stateLbl.setBounds(10, 272, 391, 14);
-	this.add(stateLbl);
+		stateLbl = new JLabel("Play");
+		stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		stateLbl.setForeground(Color.GRAY);
+		stateLbl.setBounds(10, 272, 391, 14);
+		this.add(stateLbl);
 	}
 }

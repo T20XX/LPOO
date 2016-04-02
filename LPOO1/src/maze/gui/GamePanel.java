@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import maze.logic.Game;
 import maze.logic.Space;
+import maze.logic.Game.gameState;
 import maze.logic.Space.spaceType;
 
 
@@ -24,12 +25,16 @@ public class GamePanel extends JPanel {
 	private BufferedImage free;
 	private BufferedImage hero;
 	private BufferedImage dragon;
-	private int x=0, y=0;
+	private int x, y;
 	private double squareLength;
+	public final int WIDTH = 500;
+	public final int HEIGHT = 500;
+	private boolean heroMoved = true;
+	private int gamemode;
 
 	private Game game;
 
-	public GamePanel(Game game) throws IOException {
+	public GamePanel(Game game, int gamemode) throws IOException {
 		try {
 			wall = ImageIO.read(new File("img/wall.png"));
 			free = ImageIO.read(new File("img/free.png"));
@@ -39,7 +44,7 @@ public class GamePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		this.gamemode = gamemode;
 		this.game = game;
 		squareLength = WIDTH/game.getMaze().length;
 
@@ -54,20 +59,23 @@ public class GamePanel extends JPanel {
 				//System.out.println("x=" + x);
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT: 
-					x--; 
+					heroMoved = game.moveHeroLeft();
+					update();
 					break;
 
 				case KeyEvent.VK_RIGHT: 
-					x++; 
-					//System.out.println("x=" + x);
+					heroMoved = game.moveHeroRight();
+					update();
 					break;
 
 				case KeyEvent.VK_UP: 
-					y--; 
+					heroMoved = game.moveHeroUp();
+					update();
 					break;
 
 				case KeyEvent.VK_DOWN: 
-					y++; 
+					heroMoved = game.moveHeroDown();
+					update();
 					break;
 				}
 				repaint();
@@ -84,18 +92,9 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);		
 
 		//JÁ PUS ISTO AQUI, VE NA API COMO FUNCIONA O DRAWIMAGE
-		for(int i = 0; i < game.getDragons().size(); i++){
-			g.drawImage(dragon, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
-
-		}
-
-		for(int i = 0; i < game.getSwords().size(); i++){
-			//tmp.setBounds(game.getSwords().get(i).getPosition().x*30, game.getSwords().get(i).getPosition().y*30, 30, 30);
-		}
-
-		for(int i = 0; i < game.getMaze().length; i++) {
-			for(int j = 0; j < game.getMaze()[i].length; j++) {
-				switch(game.getMaze()[i][j].getType()){
+		for(int y = 0; y < game.getMaze().length; y++) {
+			for(int x = 0; x < game.getMaze()[y].length; x++) {
+				switch(game.getMaze()[y][x].getType()){
 				case EXIT:
 					g.drawImage(free, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, free.getWidth(), free.getHeight(), null);
 					break;
@@ -107,5 +106,52 @@ public class GamePanel extends JPanel {
 				}
 			}
 		}
+		for(int i = 0; i < game.getDragons().size(); i++){
+			x = game.getDragons().get(i).getPosition().x;
+			y = game.getDragons().get(i).getPosition().y;
+			g.drawImage(dragon, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+		}
+
+		for(int i = 0; i < game.getSwords().size(); i++){
+			x = game.getSwords().get(i).getPosition().x;
+			y = game.getSwords().get(i).getPosition().y;
+		g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+		}
+		x = game.getHero().getPosition().x;
+		y = game.getHero().getPosition().y;
+		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+	}
+	public void update(){
+		if (heroMoved){
+			switch(gamemode){
+			case 2:
+				game.moveDragons();
+				break;
+			case 3:
+				game.moveOrSleepDragons();
+				break;
+			default:
+				break;
+			}
+
+			game.updateGameState();
+		}
+		updateState();
+	}
+	
+	public void updateState(){
+		if(game.getState() == gameState.GAMEOVER){
+		//	stateLbl.setText("Hero was killed by a dragon!");
+			System.exit(0);
+		}
+		else if(game.getState() == gameState.WIN){
+		//	stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
+			System.exit(0);
+		}
+		else{
+			//stateLbl.setText("Play!");
+		}
+		//contentPane.revalidate();
+		//contentPane.repaint();
 	}
 }

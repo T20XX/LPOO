@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import maze.logic.Game;
+
 
 public class GameGUI{
 
@@ -41,10 +43,9 @@ public class GameGUI{
 		frame.setBounds(100, 100, 450, 300);
 		frame.setPreferredSize(new Dimension(450, 300));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		GamePanel panel = new GamePanel();
+		Game g = new Game("Map");
+		GamePanel panel = new GamePanel(g);
 		frame.getContentPane().add(panel);
-
 		frame.pack();
 		
 		frame.setVisible(true);

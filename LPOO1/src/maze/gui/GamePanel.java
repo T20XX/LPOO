@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import maze.logic.Game;
+import maze.logic.Space;
 import maze.logic.Space.spaceType;
 
 
@@ -23,11 +24,12 @@ public class GamePanel extends JPanel {
 	private BufferedImage free;
 	private BufferedImage hero;
 	private BufferedImage dragon;
-	private int x=0, y=0, width=50, height=50;
-	
-	private Game g;
+	private int x=0, y=0;
+	private double squareLength;
 
-	public GamePanel() throws IOException {
+	private Game game;
+
+	public GamePanel(Game game) throws IOException {
 		try {
 			wall = ImageIO.read(new File("img/wall.png"));
 			free = ImageIO.read(new File("img/free.png"));
@@ -37,8 +39,9 @@ public class GamePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		g = new Game("Map");
+
+		this.game = game;
+		squareLength = WIDTH/game.getMaze().length;
 
 		addKeyListener(new KeyListener() {
 			@Override
@@ -79,34 +82,30 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);		
-		//g.drawImage(hero, x, y, x + width - 1, y + height - 1, 0, 0, hero.getWidth(), hero.getHeight(), null);
-		
+
 		//JÁ PUS ISTO AQUI, VE NA API COMO FUNCIONA O DRAWIMAGE
-		
-		/*for(int i = 0; i < g.getDragons().size(); i++){
-			tmp.setBounds(g.getDragons().get(i).getPosition().x*30, g.getDragons().get(i).getPosition().y*30, 30, 30);
-			
+		for(int i = 0; i < game.getDragons().size(); i++){
+			g.drawImage(dragon, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+
 		}
 
-		for(int i = 0; i < g.getSwords().size(); i++){
-			tmp.setBounds(g.getSwords().get(i).getPosition().x*30, g.getSwords().get(i).getPosition().y*30, 30, 30);
+		for(int i = 0; i < game.getSwords().size(); i++){
+			//tmp.setBounds(game.getSwords().get(i).getPosition().x*30, game.getSwords().get(i).getPosition().y*30, 30, 30);
 		}
 
-		for(int i = 0; i < g.getMaze().length; i++) {
-			for(int j = 0; j < g.getMaze()[i].length; j++) {
-					tmp.setBounds(j*30, i*30, 30, 30);
-					//System.out.print((j+1)*20);
-					//System.out.println((i+1)*20);
-					//f.add(tmp);
-					//temp.add(tmp);
-				//} else if (g.getMaze()[i][j].getType() == spaceType.FREE){
-					//tmp = new JLabel(free_img); 
-					tmp.setBounds(j*30, i*30, 30, 30);
-					//f.add(tmp);
-					//temp.add(tmp);
-				//}
+		for(int i = 0; i < game.getMaze().length; i++) {
+			for(int j = 0; j < game.getMaze()[i].length; j++) {
+				switch(game.getMaze()[i][j].getType()){
+				case EXIT:
+					g.drawImage(free, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, free.getWidth(), free.getHeight(), null);
+					break;
+				case WALL:
+					g.drawImage(wall, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, wall.getWidth(), wall.getHeight(), null);
+					break;
+				case FREE:
+					g.drawImage(free, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, free.getWidth(), free.getHeight(), null);
+				}
 			}
-		}*/
+		}
 	}
-
 }

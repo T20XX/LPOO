@@ -293,6 +293,10 @@ public class Game {
 	public ArrayList<Sword> getSwords(){
 		return s;
 	}
+	
+	public boolean getClosed(){
+		return exitClosed;
+	}
 
 	/*public void DequalsS(){
 		for(int i = 0; i < d.size(); i++){

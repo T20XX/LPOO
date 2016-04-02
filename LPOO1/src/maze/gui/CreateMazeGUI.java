@@ -51,7 +51,7 @@ public class CreateMazeGUI {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				GenerateMazeGUI.mainWindow.setVisible(true);
+				MainMenuGUI.mainWindow.setVisible(true);
 			}
 		});
 

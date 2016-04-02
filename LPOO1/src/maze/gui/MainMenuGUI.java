@@ -27,9 +27,9 @@ import maze.logic.Game.gameState;
 import java.awt.Color;
 import java.awt.Font;
 
-public class GenerateMazeGUI extends JFrame {
+public class MainMenuGUI extends JFrame {
 	
-	public static GenerateMazeGUI mainWindow;
+	public static MainMenuGUI mainWindow;
 
 	private JPanel contentPane;
 	private JTextField mazeDimensionText;
@@ -51,7 +51,7 @@ public class GenerateMazeGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainWindow = new GenerateMazeGUI();
+					mainWindow = new MainMenuGUI();
 					mainWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,44 +63,44 @@ public class GenerateMazeGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GenerateMazeGUI() {
+	public MainMenuGUI() {
 		setTitle("Hero Maze");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 330);
+		setBounds(100, 100, 500, 410);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel mazeDimensionLbl = new JLabel("Maze Dimension");
-		mazeDimensionLbl.setBounds(10, 11, 125, 14);
+		mazeDimensionLbl.setBounds(10, 86, 125, 14);
 		contentPane.add(mazeDimensionLbl);
 
 		mazeDimensionText = new JTextField();
 		mazeDimensionText.setText("11");
-		mazeDimensionText.setBounds(145, 8, 46, 20);
+		mazeDimensionText.setBounds(145, 83, 46, 20);
 		contentPane.add(mazeDimensionText);
 		mazeDimensionText.setColumns(10);
 
 		JLabel dragonsNumberLbl = new JLabel("Number of Dragons");
-		dragonsNumberLbl.setBounds(10, 36, 125, 14);
+		dragonsNumberLbl.setBounds(10, 111, 125, 14);
 		contentPane.add(dragonsNumberLbl);
 
 		dragonsNumberText = new JTextField();
 		dragonsNumberText.setText("1");
-		dragonsNumberText.setBounds(145, 33, 46, 20);
+		dragonsNumberText.setBounds(145, 108, 46, 20);
 		contentPane.add(dragonsNumberText);
 		dragonsNumberText.setColumns(10);
 
 		JLabel dragonsTypeLbl = new JLabel("Dragons Type");
-		dragonsTypeLbl.setBounds(10, 61, 94, 14);
+		dragonsTypeLbl.setBounds(10, 136, 94, 14);
 		contentPane.add(dragonsTypeLbl);
 
 		JComboBox dragonsTypeCB = new JComboBox();
 		dragonsTypeCB.addItem("Dragons don't move");
 		dragonsTypeCB.addItem("Dragons move randomly");
 		dragonsTypeCB.addItem("Dragons move randomly and fall asleep");
-		dragonsTypeCB.setBounds(101, 58, 260, 20);
+		dragonsTypeCB.setBounds(101, 133, 260, 20);
 		contentPane.add(dragonsTypeCB);
 
 		JButton exitBtn = new JButton("Exit game");
@@ -109,7 +109,7 @@ public class GenerateMazeGUI extends JFrame {
 				System.exit(0);
 			}
 		});
-		exitBtn.setBounds(371, 50, 105, 30);
+		exitBtn.setBounds(371, 125, 105, 30);
 		contentPane.add(exitBtn);
 
 		JTextArea textArea = new JTextArea();
@@ -125,7 +125,7 @@ public class GenerateMazeGUI extends JFrame {
 //		}
 //		textArea.setText(mazest);
 
-		textArea.setBounds(10, 89, 216, 172);
+		textArea.setBounds(10, 164, 216, 172);
 		contentPane.add(textArea);
 
 		upBtn = new JButton("UP");
@@ -136,7 +136,7 @@ public class GenerateMazeGUI extends JFrame {
 			}
 		});
 		upBtn.setEnabled(false);
-		upBtn.setBounds(312, 121, 89, 23);
+		upBtn.setBounds(312, 196, 89, 23);
 		contentPane.add(upBtn);
 
 		leftBtn = new JButton("LEFT");
@@ -147,7 +147,7 @@ public class GenerateMazeGUI extends JFrame {
 			}
 		});
 		leftBtn.setEnabled(false);
-		leftBtn.setBounds(252, 155, 89, 23);
+		leftBtn.setBounds(252, 230, 89, 23);
 		contentPane.add(leftBtn);
 
 		downBtn = new JButton("DOWN");
@@ -158,7 +158,7 @@ public class GenerateMazeGUI extends JFrame {
 			}
 		});
 		downBtn.setEnabled(false);
-		downBtn.setBounds(312, 191, 89, 23);
+		downBtn.setBounds(312, 266, 89, 23);
 		contentPane.add(downBtn);
 
 		rightBtn = new JButton("RIGHT");
@@ -169,7 +169,7 @@ public class GenerateMazeGUI extends JFrame {
 			}
 		});
 		rightBtn.setEnabled(false);
-		rightBtn.setBounds(359, 155, 89, 23);
+		rightBtn.setBounds(359, 230, 89, 23);
 		contentPane.add(rightBtn);
 
 		JButton newMazeBtn = new JButton("Generate maze");
@@ -201,24 +201,31 @@ public class GenerateMazeGUI extends JFrame {
 				rightBtn.setEnabled(true);
 			}
 		});
-		newMazeBtn.setBounds(371, 6, 105, 30);
+		newMazeBtn.setBounds(371, 81, 105, 30);
 		contentPane.add(newMazeBtn);
 		
 		stateLbl = new JLabel("Insert maze dimension, number of dragons and dragons type");
 		stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		stateLbl.setForeground(Color.GRAY);
-		stateLbl.setBounds(10, 272, 391, 14);
+		stateLbl.setBounds(10, 347, 391, 14);
 		contentPane.add(stateLbl);
 		
 		JButton createMazeBtn = new JButton("Create Maze");
 		createMazeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
+				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()), dragonsTypeCB.getSelectedIndex() + 1);
 				mainWindow.setVisible(false);
 			}
 		});
-		createMazeBtn.setBounds(252, 6, 105, 30);
+		createMazeBtn.setBounds(252, 81, 105, 30);
 		contentPane.add(createMazeBtn);
+		
+		JLabel titleLbl = new JLabel("Maze Mania");
+		titleLbl.setForeground(new Color(255, 102, 0));
+		titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLbl.setFont(new Font("Chiller", Font.PLAIN, 80));
+		titleLbl.setBounds(0, 0, 484, 78);
+		contentPane.add(titleLbl);
 		
 		/*addKeyListener(new KeyListener() {
 			@Override

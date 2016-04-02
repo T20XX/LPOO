@@ -41,7 +41,7 @@ public class CreateMazeGUI {
 		frame.setPreferredSize(new Dimension(507, 580));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		CreateMazePanel panel = new CreateMazePanel();
+		CreateMazePanel panel = new CreateMazePanel(20);
 		frame.getContentPane().add(panel);
 
 		frame.pack();

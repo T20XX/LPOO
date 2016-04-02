@@ -134,7 +134,11 @@ public class GamePanel extends JPanel {
 		x = game.getHero().getPosition().x;
 		y = game.getHero().getPosition().y;
 		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), (hero.getWidth()/2)*heroLeft , (hero.getHeight()/2)*heroArmed , (hero.getWidth()/2)*(heroLeft+1), (hero.getHeight()/2)*(heroArmed+1), null);
-
+		
+		if(game.getClosed()){
+		g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0 , 0 , exit.getWidth()/2, exit.getHeight(), null);
+		}
+		else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);
 		g.fillRect(0, 510, WIDTH/sizeD * game.getDragons().size(), 20);
 	}
 	public void update(){
@@ -168,7 +172,7 @@ public class GamePanel extends JPanel {
 			stateLbl.setText("Play!");
 			if(game.getState() == gameState.HERO_ARMED && heroArmed == 0)
 				heroArmed = 1;
-		}
+		}			
 		this.revalidate();
 		this.repaint();
 	}

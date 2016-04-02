@@ -23,7 +23,8 @@ public class GameGUI{
 			private int gamemode;
 			public void run() {
 				try {
-					GameGUI window = new GameGUI(game, gamemode);
+					game = new Game("Map");
+					GameGUI window = new GameGUI(game,2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,7 +48,7 @@ public class GameGUI{
 		frame = new JFrame();
 		frame.setTitle("Hero Maze");
 		frame.setBounds(100, 100, 500, 500);
-		frame.setPreferredSize(new Dimension(570, 570));
+		frame.setPreferredSize(new Dimension(500, 570));
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Back to main menu when closed

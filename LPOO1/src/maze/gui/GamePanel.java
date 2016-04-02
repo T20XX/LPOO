@@ -35,6 +35,7 @@ public class GamePanel extends JPanel {
 	private boolean heroMoved = true;
 	private int gamemode;
 	private JLabel stateLbl;
+	private int sizeD;
 
 	private Game game;
 
@@ -51,7 +52,7 @@ public class GamePanel extends JPanel {
 		this.gamemode = gamemode;
 		this.game = game;
 		squareLength = WIDTH/game.getMaze().length;
-
+		sizeD = game.getDragons().size();
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -124,6 +125,8 @@ public class GamePanel extends JPanel {
 		x = game.getHero().getPosition().x;
 		y = game.getHero().getPosition().y;
 		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+		
+		g.fillRect(0, 510, WIDTH/sizeD * game.getDragons().size(), 20);
 	}
 	public void update(){
 		if (heroMoved){

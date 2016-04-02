@@ -46,12 +46,13 @@ public class Game {
 	//private int dragon_num = 0;
 	//private int sword_num = 0;
 	private gameState state;
+	private boolean exitClosed = true;
 
-//	public static void main(String[] args) throws IOException {
-//		MazeBuilder mb = new MazeBuilder();
-//		mb.buildMazetoTXT("1.txt",27, 3);
-//
-//	}
+	//	public static void main(String[] args) throws IOException {
+	//		MazeBuilder mb = new MazeBuilder();
+	//		mb.buildMazetoTXT("1.txt",27, 3);
+	//
+	//	}
 
 	/**
 	 * Creates a new game based on a maze
@@ -198,10 +199,10 @@ public class Game {
 		}
 	}
 
-/**
- * Updates game state
- * Checks if the hero picks the sword and if he get killed or kills any dragon
- */
+	/**
+	 * Updates game state
+	 * Checks if the hero picks the sword and if he get killed or kills any dragon
+	 */
 	public void updateGameState(){
 
 		//Arm the hero when it founds a sword
@@ -216,6 +217,17 @@ public class Game {
 
 		if(d.size() == 0)
 		{
+			//opens exit after killing all dragons
+			if (exitClosed){
+			for(int y = 0; y < maze.length; y++) {
+				for(int x = 0; x < maze[y].length; x++) {
+					if (maze[y][x].getType() == spaceType.EXIT){
+						maze[y][x].setAllowMove(true);
+						exitClosed = false;
+					}
+				}
+			}
+			}
 			//Checks if hero can exit
 			if(maze[h.getPosition().y][h.getPosition().x].getType() == spaceType.EXIT){
 				state = gameState.WIN;

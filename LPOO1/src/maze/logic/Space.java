@@ -45,7 +45,7 @@ public class Space {
 
 		case 'S':
 			type = spaceType.EXIT;
-			allowMove = true;
+			allowMove = false;
 			break;
 
 		default:
@@ -83,5 +83,13 @@ public class Space {
 	 */
 	public spaceType getType() {
 		return type;
+	}
+
+	/**
+	 * Sets the space to allow or not move and existence of characters or swords
+	 * @param b True to allow move and false to forbid
+	 */
+	public void setAllowMove(boolean b) {
+		allowMove = b;
 	}
 }

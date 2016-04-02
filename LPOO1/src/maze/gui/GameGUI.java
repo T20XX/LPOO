@@ -40,13 +40,16 @@ public class GameGUI{
 	private void initialize() throws IOException {
 		frame = new JFrame();
 		frame.setTitle("Hero Maze");
-		frame.setBounds(100, 100, 450, 300);
-		frame.setPreferredSize(new Dimension(450, 300));
+		frame.setBounds(100, 100, 500, 500);
+		frame.setPreferredSize(new Dimension(500, 500));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Game g = new Game("Map");
 		GamePanel panel = new GamePanel(g);
 		frame.getContentPane().add(panel);
+		
 		frame.pack();
+		
+		frame.setResizable(false);
 		
 		frame.setVisible(true);
 		

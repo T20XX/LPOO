@@ -44,7 +44,8 @@ public class GameGUI{
 		frame.setPreferredSize(new Dimension(500, 500));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Game g = new Game("Map");
-		GamePanel panel = new GamePanel(g);
+		int gamemode = 3;
+		GamePanel panel = new GamePanel(g,gamemode);
 		frame.getContentPane().add(panel);
 		
 		frame.pack();

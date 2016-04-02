@@ -1,4 +1,6 @@
 package maze.gui;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import maze.logic.Game;
 import maze.logic.Space;
@@ -31,6 +34,7 @@ public class GamePanel extends JPanel {
 	public final int HEIGHT = 500;
 	private boolean heroMoved = true;
 	private int gamemode;
+	private JLabel stateLbl;
 
 	private Game game;
 
@@ -115,7 +119,7 @@ public class GamePanel extends JPanel {
 		for(int i = 0; i < game.getSwords().size(); i++){
 			x = game.getSwords().get(i).getPosition().x;
 			y = game.getSwords().get(i).getPosition().y;
-		g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+			g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 		}
 		x = game.getHero().getPosition().x;
 		y = game.getHero().getPosition().y;
@@ -138,20 +142,27 @@ public class GamePanel extends JPanel {
 		}
 		updateState();
 	}
-	
+
 	public void updateState(){
 		if(game.getState() == gameState.GAMEOVER){
-		//	stateLbl.setText("Hero was killed by a dragon!");
+			stateLbl.setText("Hero was killed by a dragon!");
 			System.exit(0);
 		}
 		else if(game.getState() == gameState.WIN){
-		//	stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
+			stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
 			System.exit(0);
 		}
 		else{
-			//stateLbl.setText("Play!");
+			stateLbl.setText("Play!");
 		}
-		//contentPane.revalidate();
-		//contentPane.repaint();
+		this.revalidate();
+		this.repaint();
+	}
+	{
+	stateLbl = new JLabel("Play");
+	stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+	stateLbl.setForeground(Color.GRAY);
+	stateLbl.setBounds(10, 272, 391, 14);
+	this.add(stateLbl);
 	}
 }

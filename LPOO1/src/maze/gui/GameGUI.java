@@ -10,6 +10,8 @@ import maze.logic.Game;
 
 public class GameGUI{
 
+	private Game game;
+	private int gamemode;
 	private JFrame frame;
 
 	/**
@@ -17,9 +19,12 @@ public class GameGUI{
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			private Game game;
+			private int gamemode;
 			public void run() {
 				try {
-					GameGUI window = new GameGUI();
+					game = new Game("Map");
+					GameGUI window = new GameGUI(game,2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -30,7 +35,9 @@ public class GameGUI{
 	/**
 	 * Create the application.
 	 */
-	public GameGUI() throws IOException {
+	public GameGUI(Game game, int gamemode) throws IOException {
+		this.game = game;
+		this.gamemode = gamemode;
 		initialize();
 	}
 
@@ -41,11 +48,18 @@ public class GameGUI{
 		frame = new JFrame();
 		frame.setTitle("Hero Maze");
 		frame.setBounds(100, 100, 500, 500);
-		frame.setPreferredSize(new Dimension(500, 500));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Game g = new Game("Map");
-		int gamemode = 3;
-		GamePanel panel = new GamePanel(g,gamemode);
+		frame.setPreferredSize(new Dimension(500, 570));
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		//Back to main menu when closed
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				GenerateMazeGUI.mainWindow.setVisible(true);
+			}
+		});
+	
+		GamePanel panel = new GamePanel(game,gamemode);
 		frame.getContentPane().add(panel);
 		
 		frame.pack();

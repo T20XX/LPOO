@@ -294,7 +294,11 @@ public class Game {
 		return s;
 	}
 	
-	public boolean getClosed(){
+	/**
+	 * Returns if the exit is open or close
+	 * @return True if the exit is closed and false if the exit is opened
+	 */
+	public boolean getExitClosed(){
 		return exitClosed;
 	}
 

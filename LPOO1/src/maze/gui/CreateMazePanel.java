@@ -63,7 +63,7 @@ public class CreateMazePanel extends JPanel {
 			hero = ImageIO.read(new File("img/hero.png"));
 			sword = ImageIO.read(new File("img/sword.png"));
 			dragon = ImageIO.read(new File("img/dragon.png"));
-			exit = ImageIO.read(new File("img/exit_closed.png"));
+			exit = ImageIO.read(new File("img/exit.png"));
 			delete = ImageIO.read(new File("img/delete.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -249,7 +249,7 @@ public class CreateMazePanel extends JPanel {
 					g.drawImage(dragon, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 					break;
 				case 'S':
-					g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, exit.getWidth(), exit.getHeight(), null);
+					g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, exit.getWidth()/2, exit.getHeight(), null);
 					break;
 				default:
 					break;
@@ -260,10 +260,10 @@ public class CreateMazePanel extends JPanel {
 
 		//Draws down "toolbar"
 		g.drawImage(wall, 0, 501, 49, 550, 0, 0, wall.getWidth(), wall.getHeight(), null);
-		g.drawImage(hero, 50, 501, 99, 550, 0, 0, hero.getWidth()/4, hero.getHeight(), null);
+		g.drawImage(hero, 50, 501, 99, 550, 0, 0, hero.getWidth()/2, hero.getHeight()/2, null);
 		g.drawImage(sword, 100, 501, 149, 550, 0, 0, sword.getWidth(), sword.getHeight(), null);
 		g.drawImage(dragon, 150, 501, 199, 550, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
-		g.drawImage(exit, 200, 501, 249, 550, 0, 0, exit.getWidth(), exit.getHeight(), null);
+		g.drawImage(exit, 200, 501, 249, 550, 0, 0, exit.getWidth()/2, exit.getHeight(), null);
 		g.drawImage(delete, 250, 501, 299, 550, 0, 0, delete.getWidth(), delete.getHeight(), null);
 		//g.drawImage(confirm, 50, 501, 99, 550, 0, 0, confirm.getWidth(), confirm.getHeight(), null);
 		//g.drawImage(cancel, 50, 501, 99, 550, 0, 0, cancel.getWidth(), cancel.getHeight(), null);

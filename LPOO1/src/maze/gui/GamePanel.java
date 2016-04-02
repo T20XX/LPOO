@@ -107,7 +107,7 @@ public class GamePanel extends JPanel {
 			for(int x = 0; x < game.getMaze()[y].length; x++) {
 				switch(game.getMaze()[y][x].getType()){
 				case EXIT:
-					if(game.getClosed()){
+					if(game.getExitClosed()){
 						g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0 , 0 , exit.getWidth()/2, exit.getHeight(), null);
 						}
 						else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);

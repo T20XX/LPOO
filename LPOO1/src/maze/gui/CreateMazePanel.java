@@ -63,7 +63,7 @@ public class CreateMazePanel extends JPanel {
 			hero = ImageIO.read(new File("img/hero.png"));
 			sword = ImageIO.read(new File("img/sword.png"));
 			dragon = ImageIO.read(new File("img/dragon.png"));
-			exit = ImageIO.read(new File("img/free.png"));
+			exit = ImageIO.read(new File("img/exit_closed.png"));
 			delete = ImageIO.read(new File("img/delete.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -240,7 +240,7 @@ public class CreateMazePanel extends JPanel {
 					g.drawImage(wall, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, wall.getWidth(), wall.getHeight(), null);
 					break;
 				case 'H':
-					g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, hero.getWidth(), hero.getHeight(), null);
+					g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, hero.getWidth()/2, hero.getHeight()/2, null);
 					break;
 				case 'E':
 					g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, sword.getWidth(), sword.getHeight(), null);
@@ -260,7 +260,7 @@ public class CreateMazePanel extends JPanel {
 
 		//Draws down "toolbar"
 		g.drawImage(wall, 0, 501, 49, 550, 0, 0, wall.getWidth(), wall.getHeight(), null);
-		g.drawImage(hero, 50, 501, 99, 550, 0, 0, hero.getWidth(), hero.getHeight(), null);
+		g.drawImage(hero, 50, 501, 99, 550, 0, 0, hero.getWidth()/4, hero.getHeight(), null);
 		g.drawImage(sword, 100, 501, 149, 550, 0, 0, sword.getWidth(), sword.getHeight(), null);
 		g.drawImage(dragon, 150, 501, 199, 550, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 		g.drawImage(exit, 200, 501, 249, 550, 0, 0, exit.getWidth(), exit.getHeight(), null);

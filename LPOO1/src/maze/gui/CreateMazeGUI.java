@@ -1,4 +1,5 @@
 package maze.gui;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 

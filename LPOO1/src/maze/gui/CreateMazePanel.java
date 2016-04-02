@@ -1,6 +1,7 @@
 package maze.gui;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -82,7 +83,8 @@ public class CreateMazePanel extends JPanel {
 		cancelBtn = new JButton("Cancel");
 		cancelBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				GenerateMazeGUI.mainWindow.setVisible(true);
+				
 			}
 		});
 		cancelBtn.setBounds(300, 500, 100, 50);
@@ -119,38 +121,55 @@ public class CreateMazePanel extends JPanel {
 						selected = objectSelected.DELETE;
 				} else {
 					char tmp = ' ';
-					switch (selected){
-					case WALL:
-						tmp = 'X';
-						break;
+					if (e.getX() > squareLength && e.getX() < squareLength * (mazeDim - 1) &&
+							e.getY() > squareLength && e.getY() < squareLength * (mazeDim - 1)){
+						switch (selected){
+						case WALL:
+							tmp = 'X';
+							break;
 
-					case HERO:
-						tmp = 'H';
-						break;
+						case HERO:
+							tmp = 'H';
+							break;
 
-					case SWORD:
-						tmp = 'E';
-						break;
+						case SWORD:
+							tmp = 'E';
+							break;
 
-					case DRAGON:
-						tmp = 'D';
-						break;
+						case DRAGON:
+							tmp = 'D';
+							break;
 
-					case EXIT:
-						tmp = 'S';
-						break;
+						case EXIT:
+							tmp = 'S';
+							break;
 
-					case DELETE:
-						tmp = ' ';
-						break;
+						case DELETE:
+							tmp = ' ';
+							break;
 
-					default:
-						break;
+						default:
+							break;
+						}
+						maze[(int)(e.getY()/squareLength)][(int)(e.getX()/squareLength)] = tmp;
+					} else {
+						//BORDERS CAN ONLY HAVE WALLS OR EXIT
+						switch (selected){
+						case EXIT:
+							tmp = 'S';
+							maze[(int)(e.getY()/squareLength)][(int)(e.getX()/squareLength)] = tmp;
+							break;
+
+						case DELETE:
+							tmp = 'X';
+							maze[(int)(e.getY()/squareLength)][(int)(e.getX()/squareLength)] = tmp;
+							break;
+
+						default:
+							break;
+						}
 					}
-					maze[(int)(e.getY()/squareLength)][(int)(e.getX()/squareLength)] = tmp;
 				}
-				//x = e.getX();
-				//y = e.getY();
 				repaint();
 
 			}

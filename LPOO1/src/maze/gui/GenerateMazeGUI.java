@@ -27,6 +27,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class GenerateMazeGUI extends JFrame {
+	
+	public static GenerateMazeGUI mainWindow;
 
 	private JPanel contentPane;
 	private JTextField mazeDimensionText;
@@ -48,8 +50,8 @@ public class GenerateMazeGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GenerateMazeGUI frame = new GenerateMazeGUI();
-					frame.setVisible(true);
+					mainWindow = new GenerateMazeGUI();
+					mainWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,7 +63,7 @@ public class GenerateMazeGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GenerateMazeGUI() {
-		setTitle("Generate Maze");
+		setTitle("Hero Maze");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 330);
 		contentPane = new JPanel();
@@ -106,7 +108,7 @@ public class GenerateMazeGUI extends JFrame {
 				System.exit(0);
 			}
 		});
-		exitBtn.setBounds(369, 43, 105, 30);
+		exitBtn.setBounds(371, 50, 105, 30);
 		contentPane.add(exitBtn);
 
 		JTextArea textArea = new JTextArea();
@@ -191,7 +193,7 @@ public class GenerateMazeGUI extends JFrame {
 				rightBtn.setEnabled(true);
 			}
 		});
-		newMazeBtn.setBounds(369, 8, 105, 30);
+		newMazeBtn.setBounds(371, 6, 105, 30);
 		contentPane.add(newMazeBtn);
 		
 		stateLbl = new JLabel("Insert maze dimension, number of dragons and dragons type");
@@ -199,6 +201,16 @@ public class GenerateMazeGUI extends JFrame {
 		stateLbl.setForeground(Color.GRAY);
 		stateLbl.setBounds(10, 272, 391, 14);
 		contentPane.add(stateLbl);
+		
+		JButton createMazeBtn = new JButton("Create Maze");
+		createMazeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()));
+				mainWindow.setVisible(false);
+			}
+		});
+		createMazeBtn.setBounds(252, 6, 105, 30);
+		contentPane.add(createMazeBtn);
 		
 		/*addKeyListener(new KeyListener() {
 			@Override

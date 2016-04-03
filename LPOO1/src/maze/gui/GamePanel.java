@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,7 +28,8 @@ public class GamePanel extends JPanel {
 	private BufferedImage sword;
 	private BufferedImage free;
 	private BufferedImage hero;
-	private BufferedImage dragon;
+	private BufferedImage dragon_sleeping;
+	private BufferedImage dragon_awake;
 	private BufferedImage exit;
 	private int x, y;
 	private double squareLength;
@@ -48,7 +50,8 @@ public class GamePanel extends JPanel {
 			free = ImageIO.read(new File("img/free.png"));
 			hero = ImageIO.read(new File("img/hero.png"));
 			sword = ImageIO.read(new File("img/sword.png"));	
-			dragon = ImageIO.read(new File("img/dragon.png"));
+			dragon_sleeping = ImageIO.read(new File("img/dragon_sleeping.png"));
+			dragon_awake = ImageIO.read(new File("img/dragon.png"));
 			exit = ImageIO.read(new File("img/exit.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,7 +127,9 @@ public class GamePanel extends JPanel {
 		for(int i = 0; i < game.getDragons().size(); i++){
 			x = game.getDragons().get(i).getPosition().x;
 			y = game.getDragons().get(i).getPosition().y;
-			g.drawImage(dragon, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+			if(game.getDragons().get(i).getSleeping())
+				g.drawImage(dragon_sleeping, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon_sleeping.getWidth(), dragon_sleeping.getHeight(), null);
+			else g.drawImage(dragon_awake, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, dragon_awake.getWidth(), dragon_awake.getHeight(), null);
 		}
 
 		for(int i = 0; i < game.getSwords().size(); i++){
@@ -162,10 +167,12 @@ public class GamePanel extends JPanel {
 	public void updateState(){
 		if(game.getState() == gameState.GAMEOVER){
 			stateLbl.setText("Hero was killed by a dragon!");
+			JOptionPane.showMessageDialog(getParent(), "You Lost!!");
 			System.exit(0);
 		}
 		else if(game.getState() == gameState.WIN){
 			stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
+			JOptionPane.showMessageDialog(getParent(), "You won!!");
 			System.exit(0);
 		}
 		else{

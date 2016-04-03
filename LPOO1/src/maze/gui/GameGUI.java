@@ -15,24 +15,6 @@ public class GameGUI{
 	private JFrame frame;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			private Game game;
-			private int gamemode;
-			public void run() {
-				try {
-					game = new Game("Map");
-					GameGUI window = new GameGUI(game,2);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public GameGUI(Game game, int gamemode) throws IOException {
@@ -47,7 +29,7 @@ public class GameGUI{
 	private void initialize() throws IOException {
 		frame = new JFrame();
 		frame.setTitle("Hero Maze");
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(600, 250, 500, 500);
 		frame.setPreferredSize(new Dimension(500, 570));
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -59,8 +41,9 @@ public class GameGUI{
 			}
 		});
 	
-		GamePanel panel = new GamePanel(game,gamemode);
+		GamePanel panel = new GamePanel(this.frame, game,gamemode);
 		frame.getContentPane().add(panel);
+		
 		
 		frame.pack();
 		

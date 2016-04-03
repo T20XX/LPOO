@@ -14,21 +14,6 @@ public class CreateMazeGUI {
 	private int gamemode;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateMazeGUI window = new CreateMazeGUI(10, 2);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public CreateMazeGUI(int mazeDim, int gamemode) {
@@ -43,7 +28,7 @@ public class CreateMazeGUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Create Maze");
-		frame.setBounds(100, 100, 500, 550);
+		frame.setBounds(600, 250, 500, 550);
 		frame.setPreferredSize(new Dimension(507, 580));
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -55,7 +40,7 @@ public class CreateMazeGUI {
 			}
 		});
 
-		CreateMazePanel panel = new CreateMazePanel(mazeDim, gamemode);
+		CreateMazePanel panel = new CreateMazePanel(this.frame, mazeDim, gamemode);
 		frame.getContentPane().add(panel);
 
 		frame.pack();

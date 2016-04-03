@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -28,14 +29,15 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class MainMenuGUI extends JFrame {
-	
+
 	public static MainMenuGUI mainWindow;
 
 	private JPanel contentPane;
 	private JTextField mazeDimensionText;
 	private JTextField dragonsNumberText;
-	
+
 	private JLabel stateLbl;
+	private JTextArea textArea;
 	private JButton upBtn;
 	private JButton leftBtn;
 	private JButton downBtn;
@@ -64,9 +66,10 @@ public class MainMenuGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainMenuGUI() {
+		setResizable(false);
 		setTitle("Hero Maze");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 410);
+		setBounds(600, 250, 490, 410);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -112,19 +115,12 @@ public class MainMenuGUI extends JFrame {
 		exitBtn.setBounds(371, 125, 105, 30);
 		contentPane.add(exitBtn);
 
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
+		textArea.setForeground(Color.BLACK);
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		textArea.setEditable(false);
 		textArea.setEnabled(false);
-//		String mazest = "";
-//		for(int i = 0; i < mazeta[0].length; i++){
-//			for(int j = 0; j < mazeta[i].length;j++){
-//				if(mazest == "") mazest = String.valueOf(mazeta[i][j]);
-//				else mazest = mazest + String.valueOf(mazeta[i][j]);
-//			}
-//			mazest = mazest + "\n";
-//		}
-//		textArea.setText(mazest);
-
+		textArea.setDisabledTextColor(Color.BLACK);
 		textArea.setBounds(10, 164, 216, 172);
 		contentPane.add(textArea);
 
@@ -175,6 +171,7 @@ public class MainMenuGUI extends JFrame {
 		JButton newMazeBtn = new JButton("Generate maze");
 		newMazeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(checkValuesInserted()){
 				//generate maze
 				MazeBuilder mb = new MazeBuilder();
 				mb.buildMazetoTXT("tmp",Integer.parseInt(mazeDimensionText.getText()), Integer.parseInt(dragonsNumberText.getText()));
@@ -183,90 +180,58 @@ public class MainMenuGUI extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
+
 				//set gamemode
 				gamemode = dragonsTypeCB.getSelectedIndex() + 1;
-				
+
 				try {
 					GameGUI nextWindow = new GameGUI(new Game("tmp"), gamemode);
+					mainWindow.setVisible(false);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				//enable movement buttons
-				upBtn.setEnabled(true);
-				leftBtn.setEnabled(true);
-				downBtn.setEnabled(true);
-				rightBtn.setEnabled(true);
+				
+//				UNCOMMENT TO TEST TEXTAREA AND MOVE WITH BUTTONS
+//				//enable movement buttons
+//				upBtn.setEnabled(true);
+//				leftBtn.setEnabled(true);
+//				downBtn.setEnabled(true);
+//				rightBtn.setEnabled(true);
+				}
 			}
 		});
 		newMazeBtn.setBounds(371, 81, 105, 30);
 		contentPane.add(newMazeBtn);
-		
+
 		stateLbl = new JLabel("Insert maze dimension, number of dragons and dragons type");
 		stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		stateLbl.setForeground(Color.GRAY);
 		stateLbl.setBounds(10, 347, 391, 14);
 		contentPane.add(stateLbl);
-		
+
 		JButton createMazeBtn = new JButton("Create Maze");
 		createMazeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()), dragonsTypeCB.getSelectedIndex() + 1);
-				mainWindow.setVisible(false);
+				if(checkValuesInserted()){
+					CreateMazeGUI nextWindow = new CreateMazeGUI(Integer.parseInt(mazeDimensionText.getText()), dragonsTypeCB.getSelectedIndex() + 1);
+					mainWindow.setVisible(false);
+				}
 			}
 		});
 		createMazeBtn.setBounds(252, 81, 105, 30);
 		contentPane.add(createMazeBtn);
-		
+
 		JLabel titleLbl = new JLabel("Maze Mania");
 		titleLbl.setForeground(new Color(255, 102, 0));
 		titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLbl.setFont(new Font("Chiller", Font.PLAIN, 80));
 		titleLbl.setBounds(0, 0, 484, 78);
 		contentPane.add(titleLbl);
-		
-		/*addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				switch(e.getKeyCode()){
-				
-				case KeyEvent.VK_UP: 
-					heroMoved = g.moveHeroUp();
-					update();
-					break;
-					
-				case KeyEvent.VK_LEFT: 
-					heroMoved = g.moveHeroLeft();
-					update();
-					break;
-
-				case KeyEvent.VK_DOWN: 
-					heroMoved = g.moveHeroDown();
-					update();
-					break;
-					
-				case KeyEvent.VK_RIGHT: 
-					heroMoved = g.moveHeroRight();
-					update();
-					break;
-				}
-				repaint();
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}			
-		});*/
 
 	}
-	
+
 	public void update(){
 		if (heroMoved){
 			switch(gamemode){
@@ -285,7 +250,7 @@ public class MainMenuGUI extends JFrame {
 		print(g);
 		updateState();
 	}
-	
+
 	public void updateState(){
 		if(g.getState() == gameState.GAMEOVER){
 			stateLbl.setText("Hero was killed by a dragon!");
@@ -297,6 +262,11 @@ public class MainMenuGUI extends JFrame {
 		}
 		else if(g.getState() == gameState.WIN){
 			stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
+			//disable movement buttons
+			upBtn.setEnabled(false);
+			leftBtn.setEnabled(false);
+			downBtn.setEnabled(false);
+			rightBtn.setEnabled(false);
 		}
 		else{
 			stateLbl.setText("Play!");
@@ -304,8 +274,8 @@ public class MainMenuGUI extends JFrame {
 		//contentPane.revalidate();
 		//contentPane.repaint();
 	}
-	
-	public static void print(Game g){
+
+	public void print(Game g){
 		char tmp[][] = new char[g.getMaze().length][g.getMaze()[0].length];
 
 		for(int i = 0; i < g.getMaze().length; i++) {
@@ -316,7 +286,6 @@ public class MainMenuGUI extends JFrame {
 
 		for(int i = 0; i < g.getDragons().size(); i++){
 			tmp[g.getDragons().get(i).getPosition().y][g.getDragons().get(i).getPosition().x] = g.getDragons().get(i).getAtri();
-			//tempa.get(d.get(i).getPosition().y).get(d.get(i).getPosition().x).equals('D');
 		}
 
 		for(int i = 0; i < g.getSwords().size(); i++){
@@ -324,18 +293,35 @@ public class MainMenuGUI extends JFrame {
 				tmp[g.getSwords().get(i).getPosition().y][g.getSwords().get(i).getPosition().x] = 'F';
 			else 
 				tmp[g.getSwords().get(i).getPosition().y][g.getSwords().get(i).getPosition().x] = 'E';
-			//tempa.get(s.get(i).getPosition().y).get(s.get(i).getPosition().x).equals('S');
 		}
 
 
 		tmp[g.getHero().getPosition().y][g.getHero().getPosition().x] = g.getHero().getAtri();
-		//tempa.get(h.getPosition().y).get(h.getPosition().x).equals('H');
 
+		textArea.setText("");
 		for(int i = 0; i < tmp.length; i++) {
 			for(int j = 0; j < tmp[i].length; j++) {
-				System.out.print(tmp[i][j]);
+				textArea.append(String.valueOf(tmp[i][j]));
+				//System.out.print(tmp[i][j]);
 			}
-			System.out.println();
+			textArea.append("\n");
+			//System.out.println();
 		}
+	}
+
+	public boolean checkValuesInserted(){
+		if (Integer.parseInt(mazeDimensionText.getText()) < 4 || Integer.parseInt(mazeDimensionText.getText()) > 31){
+			JOptionPane.showMessageDialog(this, "Maze dimension should be a value between 4 and 31",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if ((Integer.parseInt(dragonsNumberText.getText()) > (Integer.parseInt(mazeDimensionText.getText()) * Integer.parseInt(mazeDimensionText.getText())) / 4)){
+			JOptionPane.showMessageDialog(getParent(), "Number of dragons must be lower than a quarter of the maze's area",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		return true;
 	}
 }

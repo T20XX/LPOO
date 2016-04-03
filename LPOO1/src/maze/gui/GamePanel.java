@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,6 +25,10 @@ import maze.logic.Space.spaceType;
 
 
 public class GamePanel extends JPanel {
+
+	public final int WIDTH = 500;
+	public final int HEIGHT = 500;
+
 	private BufferedImage wall;
 	private BufferedImage sword;
 	private BufferedImage free;
@@ -31,10 +36,9 @@ public class GamePanel extends JPanel {
 	private BufferedImage dragon_sleeping;
 	private BufferedImage dragon_awake;
 	private BufferedImage exit;
-	private int x, y;
+
 	private double squareLength;
-	public final int WIDTH = 500;
-	public final int HEIGHT = 500;
+
 	private boolean heroMoved = true;
 	private int gamemode;
 	private JLabel stateLbl;
@@ -44,7 +48,11 @@ public class GamePanel extends JPanel {
 
 	private Game game;
 
-	public GamePanel(Game game, int gamemode) throws IOException {
+	private JFrame parent;
+
+	public GamePanel(JFrame parent, Game game, int gamemode) throws IOException {
+		this.setLayout(null);
+
 		try {
 			wall = ImageIO.read(new File("img/wall.png"));
 			free = ImageIO.read(new File("img/free.png"));
@@ -56,10 +64,18 @@ public class GamePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.gamemode = gamemode;
+		this.parent = parent;
 		this.game = game;
+		this.gamemode = gamemode;
 		squareLength = WIDTH/game.getMaze().length;
 		sizeD = game.getDragons().size();
+
+		stateLbl = new JLabel("Equip your hero by getting him a sword");
+		stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		stateLbl.setForeground(Color.GRAY);
+		stateLbl.setBounds(10, 500, 480, 14);
+		this.add(stateLbl);
+
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -103,17 +119,19 @@ public class GamePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);		
+		super.paintComponent(g);
+
+		int x, y;
 
 		//JÁ PUS ISTO AQUI, VE NA API COMO FUNCIONA O DRAWIMAGE
-		for(int y = 0; y < game.getMaze().length; y++) {
-			for(int x = 0; x < game.getMaze()[y].length; x++) {
+		for(y = 0; y < game.getMaze().length; y++) {
+			for(x = 0; x < game.getMaze()[y].length; x++) {
 				switch(game.getMaze()[y][x].getType()){
 				case EXIT:
 					if(game.getExitClosed()){
 						g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0 , 0 , exit.getWidth()/2, exit.getHeight(), null);
-						}
-						else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);
+					}
+					else g.drawImage(exit, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), exit.getWidth()/2 , 0 , exit.getWidth(), exit.getHeight(), null);
 					break;
 				case WALL:
 					g.drawImage(wall, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, wall.getWidth(), wall.getHeight(), null);
@@ -139,12 +157,12 @@ public class GamePanel extends JPanel {
 				g.drawImage(sword, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), 0, 0, sword.getWidth(), sword.getHeight(), null);
 			}
 		}
-		
+
 		x = game.getHero().getPosition().x;
 		y = game.getHero().getPosition().y;
 		g.drawImage(hero, (int)(x*squareLength), (int)(y*squareLength), (int)((x+1)*squareLength), (int)((y+1)*squareLength), (hero.getWidth()/2)*heroLeft , (hero.getHeight()/2)*heroArmed , (hero.getWidth()/2)*(heroLeft+1), (hero.getHeight()/2)*(heroArmed+1), null);
-		
-		g.fillRect(0, 510, WIDTH/sizeD * game.getDragons().size(), 20);
+
+		g.fillRect(0, 520, WIDTH/sizeD * game.getDragons().size(), 20);
 	}
 	public void update(){
 		if (heroMoved){
@@ -167,27 +185,26 @@ public class GamePanel extends JPanel {
 	public void updateState(){
 		if(game.getState() == gameState.GAMEOVER){
 			stateLbl.setText("Hero was killed by a dragon!");
-			JOptionPane.showMessageDialog(getParent(), "You Lost!!");
-			System.exit(0);
+			JOptionPane.showMessageDialog(getParent(), "Hero was killed by a dragon!",
+					"You Lost",
+					JOptionPane.WARNING_MESSAGE);
+			MainMenuGUI.mainWindow.setVisible(true);
+			parent.dispose();
 		}
 		else if(game.getState() == gameState.WIN){
 			stateLbl.setText("Hero slained all dragons and found his way out of the maze!");
-			JOptionPane.showMessageDialog(getParent(), "You won!!");
-			System.exit(0);
+			JOptionPane.showMessageDialog(getParent(), "Hero slained all dragons and found his way out of the maze!",
+					"Congratulations",
+					JOptionPane.PLAIN_MESSAGE);
+			MainMenuGUI.mainWindow.setVisible(true);
+			parent.dispose();
 		}
 		else{
-			stateLbl.setText("Play!");
-			if(game.getState() == gameState.HERO_ARMED && heroArmed == 0)
+			if(game.getState() == gameState.HERO_ARMED && heroArmed == 0){
 				heroArmed = 1;
-		}			
-		this.revalidate();
+				stateLbl.setText("Use your sword to defeat the dragons and open the doors of the maze!");
+			}
+		}
 		this.repaint();
-	}
-	{
-		stateLbl = new JLabel("Play");
-		stateLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
-		stateLbl.setForeground(Color.GRAY);
-		stateLbl.setBounds(10, 272, 391, 14);
-		this.add(stateLbl);
 	}
 }

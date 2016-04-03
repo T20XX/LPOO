@@ -16,14 +16,14 @@ public class TestDragonsRandomBehavior {
 		Game g = new Game("Test.txt");
 		boolean outcome1 = false, outcome2 = false;
 		while (! outcome1 || ! outcome2) {
-			g.moveDragons();
-			g.updateGameState();
 			if (g.getState() == gameState.GAMEOVER)
 				outcome1 = true;
 			else if (g.getState() == gameState.HERO_UNARMED)
 				outcome2 = true;
 			else
-				fail("some error message");
+				fail("Game reached impossible game state");
+			g.moveDragons();
+			g.updateGameState();
 		}
 	}
 	
@@ -32,14 +32,14 @@ public class TestDragonsRandomBehavior {
 		Game g = new Game("Test.txt");
 		boolean outcome1 = false, outcome2 = false;
 		while (! outcome1 || ! outcome2) {
-			g.moveOrSleepDragons();
-			g.updateGameState();
 			if (g.getState() == gameState.GAMEOVER)
 				outcome1 = true;
 			else if (g.getState() == gameState.HERO_UNARMED)
 				outcome2 = true;
 			else
-				fail("some error message");
+				fail("Game reached impossible game state");
+			g.moveOrSleepDragons();
+			g.updateGameState();
 		}
 	}
 

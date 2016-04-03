@@ -215,44 +215,45 @@ public class Game {
 			}
 		}
 
+		//Checks if hero battle or die with all dragons
+		for(int i = 0; i < d.size(); i++){
+			if(((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+					((d.get(i).getPosition().x)-1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+					((d.get(i).getPosition().x)+1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
+					((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y-1 == h.getPosition().y) ||
+					((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y+1 == h.getPosition().y)){
+				if(state == gameState.HERO_UNARMED){
+					if(!d.get(i).getSleeping())
+						state = gameState.GAMEOVER;
+				}
+				else {
+					d.remove(i);
+					i--;
+				}
+			}
+		}
+
 		if(d.size() == 0)
 		{
 			//opens exit after killing all dragons
 			if (exitClosed){
-			for(int y = 0; y < maze.length; y++) {
-				for(int x = 0; x < maze[y].length; x++) {
-					if (maze[y][x].getType() == spaceType.EXIT){
-						maze[y][x].setAllowMove(true);
-						exitClosed = false;
+				for(int y = 0; y < maze.length; y++) {
+					for(int x = 0; x < maze[y].length; x++) {
+						if (maze[y][x].getType() == spaceType.EXIT){
+							maze[y][x].setAllowMove(true);
+							exitClosed = false;
+						}
 					}
 				}
-			}
 			}
 			//Checks if hero can exit
 			if(maze[h.getPosition().y][h.getPosition().x].getType() == spaceType.EXIT){
 				state = gameState.WIN;
 			}
-		} else {
-			//Checks if hero battle or die with all dragons
-			for(int i = 0; i < d.size(); i++){
-				if(((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
-						((d.get(i).getPosition().x)-1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
-						((d.get(i).getPosition().x)+1 == h.getPosition().x && d.get(i).getPosition().y == h.getPosition().y) ||
-						((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y-1 == h.getPosition().y) ||
-						((d.get(i).getPosition().x) == h.getPosition().x && d.get(i).getPosition().y+1 == h.getPosition().y)){
-					if(state == gameState.HERO_UNARMED){
-						if(!d.get(i).getSleeping())
-							state = gameState.GAMEOVER;
-					}
-					else {
-						d.remove(i);
-						i--;
-					}
-				}
-			}
 		}
 
 	}
+
 
 	/**
 	 * Returns game state
@@ -293,8 +294,12 @@ public class Game {
 	public ArrayList<Sword> getSwords(){
 		return s;
 	}
-	
-	public boolean getClosed(){
+
+	/**
+	 * Returns if the exit is open or close
+	 * @return True if the exit is closed and false if the exit is opened
+	 */
+	public boolean getExitClosed(){
 		return exitClosed;
 	}
 
